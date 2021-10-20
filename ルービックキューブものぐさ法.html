@@ -55,7 +55,7 @@ function ptnset(i) {
                       "手：</button> " + solrote[i+1].replace(/-/g,"'").replace(/,/g," ") +' <button type="button" onclick="rvsRot(this)">戻す</button><br>　';
       for (var ar of solrote[i+1].split(',')) {
         if ((ar!="") && (ar!="**"))
-            pic.innerHTML += '<img src="https://mori1-hakua.tokyo/images/'+ar+'.gif">';
+            pic.innerHTML += '<img src="images/'+ar+'.gif">';
       }
     }
 }
@@ -223,8 +223,8 @@ function openOnly(obj) {
 　・棒ー六<br>
 　・三ー六<br>
 </details>
-　　<img src="https://mori1-hakua.tokyo/images/CUBE2.png" width=100>
-<img src="https://mori1-hakua.tokyo/images/CUBE3.png" width=100>
+　　<img src="images/CUBE2.png" width=100>
+<img src="images/CUBE3.png" width=100>
 <details><summary>
 (5)ものぐさ金魚<br>
 　黄色面の魚型を、下図のような横面を含むGoalFishの魚型に進化させる。<br>
@@ -236,8 +236,8 @@ function openOnly(obj) {
 　・黄色一面からの時は、３個同色の対面<font color=red>CC’</font>から（Up）実施で一気にゴールへ<br>
 　　　　　　　　　　　　３個同色無ければ、クルクルパーム後４）へ<br>
 </details>
-　<img src="https://mori1-hakua.tokyo/images/CUBE4.png" width=150>
-<img src="https://mori1-hakua.tokyo/images/CUBE5.png" width=150>
+　<img src="images/CUBE4.png" width=150>
+<img src="images/CUBE5.png" width=150>
 <details><summary>
 (6)クルクルパームで一気にゴールへ<br>
 　<font color=red>⇩</font>の矢印位置から、左右クルクルパームを１発仕掛ける。</summary>
@@ -273,7 +273,7 @@ function openOnly(obj) {
 　なお実績は、最終ターンがクルクルパーム９割、Hパーム１割という出現バランスです。<br>
 </div>
 <details><summary>　【動画】クルクルパームでFinish ！<br>
-</summary>　<video src="https://mori1-hakua.tokyo/images/CubeGoal.mp4" width=500 height=300 controls autoplay muted loop></video>
+</summary>　<video src="images/CubeGoal.mp4" width=500 height=300 controls autoplay muted loop></video>
 </details>
 <details><summary>　【参考】暗記する５つの回転手順</summary>
 <details><summary>　クルクル<b>ムーブ:</b> R' U' F' U F R <button type="button" onclick="RotCopy(this)">コピー</button><br>
@@ -351,7 +351,7 @@ function openOnly(obj) {
 </details><br>
 <div id="Example">
 <details open><summary>　【事例】スクランブル例と、ものぐさソルブ　（85手）</summary>
-   <img src="https://mori1-hakua.tokyo/images/Rubik_scramble.png"><br>
+   <img src="images/Rubik_scramble.png"><br>
 　　 <button type="button" onclick="openAll(document.getElementById('Example'))">全ソルブを開く</button>
 　　 <button type="button" onclick="openAll(document.getElementById('Example'),'')">全ソルブを閉じる</button><br>
 　　 <button type="button" onclick="fwdRot(this)">ごちゃ混ぜ</button>
