@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="認知症予防,簡単,２分" />
+<title>ルービックキューブ簡単解法</title>
+<meta property="og:url"                content="https://mori1-hakua.tokyo/RCeasy.html" />
+<meta property="og:type"               content="article" />
+<meta property="og:title"              content="ルービックキューブ簡単解法" />
+<meta property="og:description"        content="認知症予防,簡単,２分" />
+<meta property="og:image"              content="https://mori1-hakua.tokyo/images/CUBE4.png" />
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style type=text/css>
+summary:hover {
+  cursor: pointer; /* カーソルを指マークに */
+  background-color: #EFEFEF;
+}
+</style>
+<script type=text/javascript>
+var solrote = [];
+solrote[0] = "";
+solrote[1] = "R,U2,B,L-,D,F2";
+solrote[2] = "X2,F,U-,F-2,U2,F,R,U-2,R-,L,U-,L-,U-2,B,U,B-,L,U,L-,U2,L,U-,L-,U-,Y2";
+solrote[3] = "F,B-,U-,B,U,F-,U-,B-,U,B,U2,R-,U-,F-,U,F,R,U2,R-,U-,F-,U,F,R,U-,R-,U-,R,U-,R-,U-2,R";
+solrote[4] = "Y,M2,U,M-,U2,M,U,M2";
+solrote[5] = "U2,R-,U-,R,U-,R-,U-2,R";
+solrote[6] = "U2,L,D,B2,D-,F,R,B,D-,L,U2,L,F-,L,D2,U-,F2,U,R2";
+solrote[7] = "L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L";
+
+function setLsner() {
+  for (var i=0;i<6;i++) {
+    var pic = document.getElementsByName('solve')[i];
+    eval('pic.addEventListener("toggle",ptnload'+i+')');
+  }
+}
+function ptnload0() { ptnload(0); }
+function ptnload1() { ptnload(1); }
+function ptnload2() { ptnload(2); }
+function ptnload3() { ptnload(3); }
+function ptnload4() { ptnload(4); }
+function ptnload5() { ptnload(5); }
+
+function ptnload(i) {
+    var pic = document.getElementsByName('solve')[i];
+    if (pic.open) {
+//          alert(pic.getElementsByTagName('summary')[0].innerHTML.slice(0,3)+"open");
+          ptnset(i);
+    } else {
+//          alert(pic.getElementsByTagName('summary')[0].innerHTML.slice(0,3)+"close");
+          pic.getElementsByTagName('p')[0].innerHTML = "";
+    }
+}
+function ptnset(i) {
+    var pic = document.getElementsByName('solve')[i].getElementsByTagName('p')[0];
+    if ( pic.innerHTML=="")
+      pic.innerHTML = "　";
+      for (var ar of solrote[i+1].split(',')) {
+        if (ar!="")
+            pic.innerHTML += '<img src="https://mori1-hakua.tokyo/images/'+ar+'.gif">';
+      }
+}
+</script>
+</head>
+<body background="images/nth_wood_blocks_bg.gif" bgcolor="#F8E2C7" onload="setLsner()">
+<h1 title="たった５パターンを覚えるだけで、ゆっくり廻して２分で完成！">ルービックキューブ簡単解法　<font size=3> 第９版　2021.4.21
+</h1>
+<details><summary>
+どんな方々にとって便利な方法なのか？</summary>
+スピードキューブという世界だけでは、このパズルの魅力は伝えきらない。<br>
+スピードキューブでは、最後に黄色一面に揃え、２１のパターンを暗記しておいて選択し、<br>
+一気に廻せというが、６０歳を超えて初めてという人にとって、認知能力低下や気力の衰え<br>
+などが影響し、ゴールの快感を得るチャンスがどんどん消えてしまい、やがて諦めがやって<br>
+くるという、全くもって切ない道具になってしまいがちである。<br>
+本解法では、途中の枝分かれを発散させることなく、３パターンに収束させるアプローチで攻め、<br>
+しかも、全ステップ数が８０前後と、スピードキューブと遜色ない数に抑えられる手順であり、<br>
+いくつになっても必ずゴールを導き、快感収得が続く画期的な手順となっている。<br><br>
+プロキュービストも使うCFOPという手法があり、最後のP(PLL)が21パターンの暗記を目標と<br>
+していて大変きついのですが、実は1.4%の確率でPLLスキップという現象が発生するそうです。<br>
+
+クルクルパームは、PLLスキップを100%にし、一気にゴールに導く手法です。<br>
+是非、お試しいただきたい。<br><br>
+</details>
+<details><summary>
+(0)世界基準配色のキューブを持っている</summary><img src="https://mori1-hakua.tokyo/images/world-color.png"><br>
+日本仕様の色は、黄色と青色が逆になっている。</details>
+　　　　<img src="https://mori1-hakua.tokyo/images/world-color.png" width=100>
+</details>
+<details><summary>
+(1)最下層に白十字が出来ている</summary>
+　中央ポストと同色で下が白のエッジキューブ（サブキューブ）が４個揃っている状態。
+　参考：<a href="https://www.megahouse.co.jp/rubikcube/strategy/step1_1/" target=_blank>ステップ1</a><br>
+　最初は、黄色面に４個持ってきて、中央色に揃えて横回転し、180°縦回転すると良い。<br>
+　慣れたら、次のノウハウが使える。<br>
+　　・180°の回転を90°ずつの二段階で進むよう考察し、途中で次の回転のために<br>
+　　　それを置いて進められるような別のエッジキューブを、横腹や尻に抱えて廻す。<br>
+　　・白横向きの上層にあるエッジキューブを90°縦回転して、再び隣面を上げる道もある。<br>
+　　・各色を縦に並べて待機するより、横に並べて待機して、一気に縦にする方が手数が短い。<br>
+　　・左右の横腹を次の回転のために上手に使うと、一気に３か所が揃うこともある。<br>
+<details><summary>　次のサンプル動画をチラ見して、</summary>
+　　赤左回り→青右回り→橙右回り→90°ずつで白十字３壁揃うという判断ができる。<br>
+　<video src="https://mori1-hakua.tokyo/images/CubeRotate.mp4" width=400 controls autoplay muted loop></video>
+</details>
+</details>
+　　　<img src="https://mori1-hakua.tokyo/images/CUBE0.png" width=120>
+
+<details><summary>
+(2)最下層・中間層が揃っている</summary>
+<details><summary>「子連れ里帰り」</summary>　　　<img src="https://mori1-hakua.tokyo/images/hurusato.png"></details>
+　　　という手法を、コーナースロット４か所に適用する。<br>
+　　　上の例では、Aが親となり、桂馬方向にある同色の子Bを引き連れて故郷に戻している。<br>
+　　　なお、上の例でAの上面がオレンジなら、オレンジ面で跳ね上げられれば、そちらが<br>
+　　　優位になる。<br>
+　　　　　参考：<a href="https://www.pazru.net/LBL/f2l/01.html" target=_blank>F2Lパターン１</a><br>
+　上層のコーナーキューブの白が上向きなら、次の優先順位でアプローチする。<br>
+　１）上層の回転だけで縦に２個連れになるか、4か所のスロットを確かめる。<br>
+　２）白を横向きに倒すとき、白を除く2色のエッジキューブと上層を異色にできる。<br>
+　３）白を除く2色のエッジキューブを上層で中央スロットに３個縦になるように<br>
+　　　横回転し、エッジスロットを90°縦回転して目的スロット３個を上層に置く。<br>
+　　　ここにコーナーキューブを横回転して合わせ、縦回転で戻す。<br>
+　以上３方式のいずれかで上層に揃った２個連れのスロットインは、下記の手順に従う。<br>
+<details><summary>　跳ね上げた2個連れの色が捻じれているなら、横回転を-90°とし、跳ね上げを戻す<br>
+　操作で、親キューブだけを上層や最下層へ配置させる。</summary>　　　<img src="https://mori1-hakua.tokyo/images/modosi1.png"><br>
+　その後は、次の操作で故郷帰りですね。(実は、上の２番目から下の２番目へ進む方がもっと早い)<br>
+　　　<img src="https://mori1-hakua.tokyo/images/F2L11.png">
+</details>
+<details><summary>　揃った２個連れは目標から90°通過するまで横回転を進め、下２層を縦回転で迎え<br>
+　入れて下へ縦回転で戻すと操作効率が良い。</summary>　　　<img src="https://mori1-hakua.tokyo/images/modosi2.png"></details>
+<br>「子連れ里帰り」４セットを、次のコツを考慮しながら実行する。<br>
+　　・下層の白キューブを上げる時、目標２個連れの位置関係は「<a title="一間置いた左右斜め前の位置">桂馬</a>」となる場所に上げる。<br>
+　　　ただし、下層の白横キューブの正面と桂馬位置での上面が同色時は、桂馬ではなく<br>
+　　　隣に置くと二手ほど手間を（下で、跳ね上げを戻す手順を記述）省ける。<br>
+<details><summary>　・２個連れが上層隣同士で色がずれて揃っていないなら、コーナー側を奥に倒して「<a title="一間置いた左右斜め前の位置">桂馬</a>」<br>
+　　　の位置に置く。（倒す時、跳ね上げ位置が不揃いポストである事に留意する）</summary>
+　　　<img src="https://mori1-hakua.tokyo/images/F2L21.png"><br>
+　　　<img src="https://mori1-hakua.tokyo/images/F2L18.png"></details>
+　　・桂馬に跳ね上げた後、桂馬に関係しない残りの辺を跳ね上げ位置に廻して、跳ね上げを戻す。<br>
+<details><summary>　・できた桂馬が上面同色なら、コーナー側を最下層退避、エッジ側を隣に呼び<br>
+　　　寄せて退避を戻す（退避時、跳ね上げ位置に留意する）。<br>
+　　　なお、上面同色よりも次の異色の方が手数が短いので、判断する。</summary>
+　　　跳ね上げたキューブが下図のAなら、それを戻して素早く次の回転が出来る。<br>
+　　　<img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle"><br>
+　　　跳ね上げたものでなければ、次の手順で帰す。<br>
+　　　<img src="https://mori1-hakua.tokyo/images/F2L11.png">
+</details>
+<details><summary>　　色が異色なら、コーナー側をキューブ正規の位置に移動し、奥に倒して２個連れとする。</summary>
+　　　<img src="https://mori1-hakua.tokyo/images/F2L01.png"></details>
+　　　エッジ側を予め奥に90°回転する場合もある。<br>
+　　・上層のコーナーキューブを最下層に退避前に、跳ね上げ位置を不揃いポストになるよう廻す。<br>
+</p></details>
+　　　<img src="https://mori1-hakua.tokyo/images/CUBE1.png" width=120>
+<br>
+　「子連れ里帰り」の判断時間が気になるなら、＜<a href="https://mori1-hakua.tokyo/ルービックキューブものぐさ法.html">ものぐさ法</a>＞という手段も使える。<br>
+　「子連れ里帰り」と混ぜこぜにうまく使うこともできる。
+<details><summary>
+(3)上層面に黄色の魚型クロスが出来ている</summary>
+<p>まずは上層面に、黄色のV字型(Ｌ字型・カギ)<img src="https://mori1-hakua.tokyo/images/Ltype.png" align="absmiddle">を作る。 参考：<a href="https://www.pazru.net/LBL/1/oll.html" target=_blank>ＯＬＬ</a><br>
+　　・V字(L)<img src="https://mori1-hakua.tokyo/images/Ltype.png" align="absmiddle">なら４個のコーナー位置が揃ってしまっていないか確認し、<br>
+　　　その場合は、３時短針位置と６時の２回クルクルムーブを続けると、手戻りが無い。<br>
+　　・点(・)<img src="https://mori1-hakua.tokyo/images/dottype.png" align="absmiddle">や横棒(-)<img src="https://mori1-hakua.tokyo/images/linetype.png" align="absmiddle">ならコーナー４キューブの正規位置を確認し、位置がずれていれば、<br>
+　　　対角交換が必要ならクルクルムーブ、隣接２個のコーナー交換が必要になっていれば、<br>
+　　　ここを右側に置いて隣接交換で確定する。<br>
+　　　その後、点(・)は好きな位置／棒(-)は右端　で クルクルムーブをV字になるまで、１～２回進める。
+<br>
+V字型の後、時計３時短針の下側(６時)を右手に持ち、クルクル<b>ムーブ</b>で魚の形にする。<br>
+魚以外の形の場合の成形：<br>
+　・1角黄色の場合はV字(L)が含まれているので、上記参照、<br>
+　・2角黄色で魚の尻尾３本<img src="https://mori1-hakua.tokyo/images/iglass.png"><font color=yellow>■(右下)</font>の場合は、尻尾を手前に、右上親指、<br>
+　・0角黄色(十字形)<font color=yellow>(左上)■<img src="https://mori1-hakua.tokyo/images/crosstype.png" align="top">■(右上)</font>の場合も、黄色横開きを奥に、右上親指、<br>
+　・2角黄色で亀形<img src="https://mori1-hakua.tokyo/images/kame.png" align="top">の場合は、左右肩光では右肩、光横開き<font color=yellow>(左上)■<img src="https://mori1-hakua.tokyo/images/kame.png" align="top">■(右上)</font>の場合は亀尻親指、<br>
+　に、それぞれ指を当て、クルクル<b>パーム</b>で魚の形にする。<br>
+
+<details><summary>　クルクル<b>ムーブ</b>:R’U’F’UFR　　</summary>
+　　<img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/F-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/F.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+</details>
+<details><summary>　クルクル<b>パーム</b>:FUF’UFU2F’　　 右廻し（Xp-a）<br>
+　　　　　　　　　 R’U’RU’R’U’2R  　左廻し (Xp-b)</summary>
+　　<img src="https://mori1-hakua.tokyo/images/F.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/F-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/F.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/F-.gif" align="absmiddle">
+<br>
+　　<img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+</details>
+　魚や亀で、隣接２個のコーナー交換が必要になっていれば、ここを右側に置いて次で確定する。
+<details><summary>　隣接交換　LR’U’RUL’U’R’UR　</summary>
+　　<img src="https://mori1-hakua.tokyo/images/L.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+</details>
+　一方、対角交換がさらに必要な場合もあり、クルクルムーブで１角だけ黄色にする。<br>
+</p></details>
+　　<img src="https://mori1-hakua.tokyo/images/CUBE2.png" width=100>
+<img src="https://mori1-hakua.tokyo/images/CUBE3.png" width=100>
+
+<details><summary>
+(4)魚の周辺が「Goal Fish」というリーチの形になっている</summary>
+<p>
+魚の腹と尻尾の色を確定するように、図(Goal Fish)の移動不要の辺を奥に置き、<br>
+３エッジ回転移動<img src="https://mori1-hakua.tokyo/images/Rrote.png" align="absmiddle">
+<img src="https://mori1-hakua.tokyo/images/Lrote.png" align="absmiddle">
+<img src="https://mori1-hakua.tokyo/images/CRSchg.png" align="absmiddle">を先に実施し、クルクルパーム１回で、<br>
+一気に完成形（Goal）に進めることが出来る。<br>
+＜魚の腹と尻尾の色揃え＞　３エッジ回転移動の左右を選んで、下図のように<br>
+　　　魚の側面の<font color=red>A’B’C’</font>の色を、コーナーキューブABCとそれぞれ同じ色に揃える。<br>
+　　　回転の前面となるキューブが、三角移動で「お前来いよ」とエッジキューブを迎えに行く。<br>
+　　　（左右の判断とは、手前の回転中央位置に欲しいエッジキューブへ向かう回し方）
+<details><summary>　　 左右判断が逆になっても、２回実施すれば同じ。でも縮めたい？</summary>
+　　　左図A=B',B=C'：右廻り　このほかに、A=A',B=C'なら、AA'を奥において右廻り<br>
+　　　左図A=C',B=A'：左廻り　このほかに、B=B',A=C'なら、BB'を奥において左廻り<br>
+　　　右図A=B',B=C'：左廻り　このほかに、A=A',B=C'なら、AA'を奥において左廻り<br>
+　　　右図A=C',B=A'：右廻り　このほかに、B=B',A=C'なら、BB'を奥において右廻り
+</details>
+<details><summary>　　 奥に「キューブお揃い」を置いて、３エッジ回転移動を実施する。<br>
+　　　（右廻り）ｔＬcuＬＬcdＬｔ　藤井式表記　　　　　　　M2U'M'U2MU'M2  　　(Up-b）<br>
+　　　（左廻り）ｔＲcuＲＲcdＲｔ　藤井式表記　　　　　　　M2UM'U2MUM2     　　(Up-a)</summary>
+　　<img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+<br>
+　　<img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+</details>
+<details><summary>　　 奥へ置くべきお揃いが無い時、それが十字交換なら、次が有利。M2UM2U2M2UM2 (Hp)</summary>
+　　<img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+</details>
+
+・<font color=red>A’B’</font>の相互交換が必要になっていた場合は、エッジ回転に替えて十字交換を実施する。<br>
+・４エッジキューブの移動になっている場合は、移動の右廻り・左廻りに合わせ、それぞれ下図の<br>
+　右図・左図のクルクルパームで、Goal Fishや或いは十字交換によるGoalを得られる。<br>　（Zパームより早い。左右逆に注意）<br>
+・100回に１度ほど、黄色が<font color=red>A’B’C’</font>の位置に残ったという勘違いがあり、この時は焦らず<br>
+　クルクルパームを２回実施することで、Goal Fishを得られる。</summary>
+</p></details>
+
+<img src="https://mori1-hakua.tokyo/images/CUBE4.png" width=150>
+<img src="https://mori1-hakua.tokyo/images/CUBE5.png" width=150>
+<details><summary>
+(5)クルクルパームで一気にゴールへ</summary>
+<p>
+前のステップで、魚の頭片方の色をコーナーキューブと同じに揃え、対面の尻尾も、<br>
+頭側コーナーの同色に揃えたことになる。<font color=red>A’B’C’</font>の色が三つともコーナーと合ったので、<br>
+PLL段階をスキップし、<font color=red>CC'</font>の面を手前において、左右回転どちらかの手順で、<br>
+一気にゴールへ爽快感。<br>
+<details><summary>クルクルパーム（左手）:LUL’ULU2L’　　 右廻し（Xp-a）<br>
+　　　　　　　　 （右手）R’U’RU’R’U’2R  　左廻し (Xp-b)</summary>
+　　<img src="https://mori1-hakua.tokyo/images/L.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L-.gif" align="absmiddle">
+<br>
+　　<img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+</details>
+<img src="https://mori1-hakua.tokyo/images/CUBE4.png" width=150>
+<img src="https://mori1-hakua.tokyo/images/CUBE5.png" width=150>
+<br>矢印の位置から右廻し　 矢印の位置から左廻し<br>
+</p></details>
+　　　<img src="https://mori1-hakua.tokyo/images/CUBE9.png" width=120><br>
+　なお実績は、最終ターンがクルクルパーム８割、Hパーム１割、Uパーム１割という<br>
+　出現バランスです。<br>
+
+<details><summary>　【動画】クルクルパームでFinish ！<br>
+</summary>　<video src="https://mori1-hakua.tokyo/images/CubeGoal.mp4" width=500 height=300 controls autoplay muted loop></video>
+</details>
+<details><summary>　【参考】暗記する５つの回転手順</summary>
+<details><summary>　クルクル<b>ムーブ</b>:R’U’F’UFR　　</summary>
+　　<img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/F-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/F.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+</details>
+<details><summary>　クルクル<b>パーム</b>:LUL’ULU2L’　　 右廻し（Xp-a）<br>
+　　　　　　　　　 R’U’RU’R’U’2R  　左廻し (Xp-b)</summary>
+　　<img src="https://mori1-hakua.tokyo/images/L.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L-.gif" align="absmiddle">
+<br>
+　　<img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+</details>
+<details><summary>　隣接交換　LR’U’RUL’U’R’UR　</summary>
+　　隣接２個のコーナー交換が必要になっていれば、ここを右側に置いて次で確定する。<br>
+　　<img src="https://mori1-hakua.tokyo/images/L.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+</details>
+<details><summary>　十字交換　M2UM2U2M2UM2 (Hp)</summary>
+　　<img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+</details>
+<details><summary>　３エッジ回転移動　M2U'M'U2MU'M2  （右廻り）(Up-b）<br>
+　　　　　　　　　　　M2UM'U2MUM2     　（左廻り) (Up-a)</summary>
+　　<img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+<br>
+　　<img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+</details>
+</details>
+<details><summary>　【事例】スクランブル例と、そのソルブ回転</summary><img src="https://mori1-hakua.tokyo/images/Rubik_scramble.png"><br>　　L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L<br>
+<details name="solve"><summary>　　(1)最下層に白十字を作る　　　　　　　 6手</summary>
+<p></p>
+</details>
+<details name="solve"><summary>　　(2)最下層・中間層を揃える　　　　　　25手</summary>
+<p></p>
+</details>
+<details name="solve"><summary>　　(3)上層面に黄色の魚型クロスを作る　　32手</summary>
+<p></p>
+</details>
+<details name="solve"><summary>　　(4)魚を「Goal Fish」形式にする　　　　8手</summary>
+<p></p>
+</details>
+<details name="solve"><summary>　　(5)クルクルパームで一気にゴールへ　　 8手</summary>
+<p></p>
+</details>
+<details name="solve"><summary>　　(6)別解：悔しいが１９手でゴールへ　　19手</summary>
+<p></p>
+</details>
+</details>
+
+　　　　　　　　　<a href="https://mori1-hakua.tokyo/RCeasy.html">https://mori1-hakua.tokyo/RCeasy.html</a>
+  By N.Fujii　　<a href="javascript:location.reload(true)" title="詳細を閉じる"><b>Top</a><br><br>
+累積アクセス数：<iframe src="/count_img/countRC.php" height=30 width=140 frameborder="0" scrolling="no"></iframe>

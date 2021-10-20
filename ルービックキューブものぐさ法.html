@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="認知症予防,簡単,２分" />
+<title>ルービックキューブものぐさ法</title>
+<meta property="og:url"                content="https://mori1-hakua.tokyo/RCeasy.html" />
+<meta property="og:type"               content="article" />
+<meta property="og:title"              content="ルービックキューブ簡単解法" />
+<meta property="og:description"        content="認知症予防,簡単,２分" />
+<meta property="og:image"              content="https://mori1-hakua.tokyo/images/CUBE4.png" />
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style type=text/css>
+summary:hover {
+  cursor: pointer; /* カーソルを指マークに */
+  background-color: #EFEFEF;
+}
+</style>
+<script type=text/javascript>
+var ClipDT  = "";
+var swin = null;
+var Rotates = "";
+var solrote = new Array(); note = new Array();
+solrote[0] = "";
+solrote[1] = "**,R,U2,B,L-,D,F2";
+solrote[2] = "X2,F,U-,F-";
+solrote[3] = "F-,U2,F,R,U-2,R-";
+solrote[4] = "U,B-,U2,B,U-2,B-,U,B,U-,B-,U,B2,U-,B-";
+solrote[5] = "U,L,U2,L-,U,L,U,L-,U,L,U-,L-";
+solrote[6] = "R-,U-,F-,U,F,R";
+solrote[7] = "R-,U-,F-,U,F,R,F-,U-,L-,U,L,F";
+solrote[8] = "Y,M2,U,M-,U2,M,U,M2,Y2,M2,U-,M-,U2,M,U-,M2";
+solrote[9] = "U,L,U,L-,U,L,U2,L-,U";
+note[1] = "白面十字揃え";
+note[2] = "ものぐさ連帰(青橙)";
+note[3] = "ものぐさ連帰(青赤)";
+note[4] = "ものぐさ連帰(赤緑)";
+note[5] = "ものぐさ連帰(緑橙)";
+note[6] = "対角交換";
+note[7] = "クルクルムーブ２回";
+note[8] = "お迎えパーム２回";
+note[9] = "混血クルクルパー厶";
+
+function ptnset(i) {
+    var pic = document.getElementsByName('solve')[i].getElementsByTagName('p')[0];
+    if ( pic.innerHTML=="") {
+      pic.innerHTML = '　<button type="button" onclick="fwdRot(this)">'+ (solrote[i+1]==""?"0":String(solrote[i+1].replace(/\*\*,/,"").split(',').length)) +
+                      "手：</button> " + solrote[i+1].replace(/-/g,"'").replace(/,/g," ") +' <button type="button" onclick="rvsRot(this)">戻す</button><br>　';
+      for (var ar of solrote[i+1].split(',')) {
+        if ((ar!="") && (ar!="**"))
+            pic.innerHTML += '<img src="https://mori1-hakua.tokyo/images/'+ar+'.gif">';
+      }
+    }
+}
+function setLsner() {
+  for (var i=0;i<9;i++) {
+    var pic = document.getElementsByName('solve')[i];
+    eval('pic.addEventListener("toggle",function() {ptnset('+i+');})');
+  }
+  window.open ("notation-3d.html","cube3df", 'height=580,width=320,dependent=yes,scrollbars=no');
+  if (location.search.slice(0,8)=="?Example") {
+    openAll(document.getElementById('Example'));
+    location.hash = "Example";
+  }
+}
+function openSwin(obj,lang="jp") {
+    if (swin) swin.clearTimeout(swin.Tid);
+    obj.parentElement.parentElement.open == "";
+    Rotates = "";
+    
+    swin = window.open ((lang=="en"?"notation-3d.e.html":"notation-3d.html"),
+           "cube3d", 'height=580,width=320,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
+}
+function openAll(obj,mode="open") {
+    for (var detal of obj.getElementsByTagName("details"))
+        detal.open = mode;
+//        if (mode=="") detal.removeAttribute('open');
+}
+function fwdRot(obj){
+    var seq = obj.nextSibling.wholeText.trim();
+    openOnly(obj);
+    Rotates += seq;
+    restart(seq);
+}
+function rvsRot(obj){
+    var seq = obj.previousSibling.wholeText.trim();
+    Rotates += "! " + seq;
+    restart("");
+}
+function restart(rot) {
+    document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
+    if (swin) {
+        swin.focus();
+        if ((swin.closed) && !cube3df.Tid)
+            cube3df.setTimeout("cube3df.checkRot()",100);
+    }
+}
+function rotSolve(obj) {
+    openOnly(obj);
+    Rotates = "*"; rot = "";
+    for (i=1;i<10;i++) Rotates += "*"+note[i]+" "+solrote[i].replace(/-/g,"'").replace(/,/g," ") + " ";
+    Rotates += "*ソルブ完了 X2 ";
+    for (i=1;i<10;i++) rot += solrote[i].replace(/-/g,"'").replace(/,/g," ") + " ";
+    document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
+}
+function pythonSolve() {
+    rotation = "";
+    if (ClipDT && (ClipDT!="")) {
+        rotation = encodeURIComponent(ClipDT.trim());
+        if (rotation.charAt(0)=="*")
+            rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
+        document.getElementById('Example').getElementsByTagName('button')[3].previousSibling.textContent = ClipDT;
+    }
+    document.getElementsByName('pythonQ')[0].contentWindow.location.replace('/python/Cube2phase_Fast2.py?value1='+rotation);
+
+}
+function RotCopy(obj){
+    document.getElementsByName('pythonQ')[0].contentWindow.location.replace('about:blank');
+    ClipDT = obj.previousSibling.wholeText.trim();
+    navigator.clipboard.writeText(ClipDT);
+}
+function openOnly(obj) {
+    openAll(document.getElementById('Example'),'');
+    upper = obj.parentElement.parentElement.parentElement;
+    if (upper.tagName=="DETAILS") {
+        upper.open = "open";
+        openAll(upper,'');
+    }
+    obj.parentElement.parentElement.open = "open";
+    openAll(document.getElementById("rotResol"));
+}
+</script>
+</head>
+<body background="images/nth_wood_blocks_bg.gif" bgcolor="#F8E2C7" onload="setLsner()">
+<h1 title="惰性的ソルブで、悩まずに廻して２分で完成！">ルービックキューブものぐさ法　<font size=3> 第３版　2021.9.20
+</h1>
+<details><summary>
+【プロローグ】</summary>
+トレッドミル傾斜で6.5Km/hの歩行をしながら、認知能力・思考力が低下する環境を利用して、<br>
+ソルブ能率を低下させない手順を数十回試行錯誤。<br>
+判断力の期待できない状況下でも、単純化と効率化をバランスさせ、それなりの結果を得られる<br>
+手法が判明した。<br>
+
+<br><br>
+</details>
+疲れて眠い時や判断力欠如の時、この惰性的ソルブでも、90手ほどで揃えられる。<br>
+（左右ムーブは使わないが、エッジお迎えに使うUパームは覚えて置くこと。）<br>
+判断ミス激減、淀み・手戻りが無くなり、ソルブ90秒程度と手数は超安定している。<br>
+<br>
+　　 <button type="button" onclick="openAll(document.getElementById('Proc'))">全解法を開く</button>
+   　<button type="button" onclick="openAll(document.getElementById('Proc'),'')">全解法を閉じる</button><br>
+<div id="Proc">
+次の６段階を経て揃える（都度、一部スキップが程良く存在する）。
+<details><summary>
+(1)一面十字作成</summary>
+　中間層に、横方向同色２個ずつ３面並べて、最後に白エッジポスト４個を白面に<br>
+　縦回転で上げる。
+　
+</details>
+　　　<img src="https://mori1-hakua.tokyo/images/CUBE0.png" width=120>
+
+<details><summary>
+(2)ものぐさ連帰<br>
+　黄色面へコーナーポスト白上げからの二個連れF2L　x４回
+</summary>
+　・コーナーポストが上面白なら、<br>
+　　・桂馬の位置のエッジキューブの上面色により、<br>
+　　　　桂馬アクセルと、桂馬ブレーキを使い分けてスロットインする。<br>
+　　ただし、倒して下記異色の桂馬位置パターンだと気づいたら、ポストを倒す方が早い。<br>
+　・上面白以外で、<br>
+　　・同色なら、エッジキューブをコーナーポストの隣に呼び寄せ<br>
+　　・異色なら、エッジキューブをコーナーとは桂馬の位置に移動させ<br>
+　　それぞれ、スロットインする。<br><br>
+　桂馬アクセルの事例：撮像の関係で、黄色面を白面で表現している</summary><br>
+　　　<img src="https://mori1-hakua.tokyo/images/MonoGF2L1.png" width=600><br>
+
+　各コーナーの白ポストの２色と同じエッジキューブを、センターキューブの色に合わせた<br>
+　上面の桂馬の位置に置く。<br>
+　白上げや桂馬上げの時、崩しても良いスロットが後方に来るよう事前に横回転移動させる<br>
+　ことを忘れてはならない。<br>
+　桂馬の位置のエッジキューブの上面色にコーナーポストを合わせられる様に、エッジスロット<br>
+　の横倒し方向（上の例では「R」）を決め、倒して、コーナースロットの横回転を迎え入れる。<br>
+　（もし最初の絵の左上丸印の色が赤だったら、上段の[R][R']回転は逆になることに注意。<br>
+　　それぞれを、桂馬アクセル、桂馬ブレーキと呼び、定石とする）<br>
+　その後、エッジスロットを縦に戻し、上層を90°回転してエッジスロットの縦回転を迎え、<br>
+　コーナースロット-90°戻し回転した後、白を下に向くようにして縦に戻す。<br>
+　　　<img src="https://mori1-hakua.tokyo/images/modosi2.png" ><br>
+　エッジ回転で影響を受けたスロットがあれば、それも忘れずに戻す。
+
+</details>
+</details>
+　　　<img src="https://mori1-hakua.tokyo/images/CUBE1.png" width=120>
+<br>
+　４個目のスロットインでは「子連れ里帰り」と混ぜこぜにうまく使うことも効果的である。<br>
+　「ものぐさ連帰」でも衰えを感じたら、＜<a href="https://mori1-hakua.tokyo/BF2L.html">初心者用F2L</a>＞という手段も存在する。<br>
+<details><summary>
+(3)コーナー交換<br>　４コーナーの位置を確定させる。</summary>
+　同色の面を持つコーナーポスト二つが１辺にあれば、その色の面に回転させ、隣接交換となる。<br>
+　隣接交換８割、対角交換（クルクルムーブ）１割、上層４コーナーの位置確定。無操作も有り<br>
+</details>
+<details><summary>
+(4)魚型十字作成（簡単解法と基本的には同じ）</summary>
+　４コーナーの位置確定後、黄色面の形に沿って回転を進める。<br>
+　（横棒・３時６時ではクルクルムーブ→、その後クルクルパーム⇒で魚型）<br>
+　クルクルパーム⇒には、開始位置によって、<br>
+　　　・左廻し専用の「肩からパーム（十字横・蝶・亀手前）」と<br>
+　　　・左廻し専用の「腰からパーム（亀手開）」と<br>
+　　　・最終段階の左右廻しの「黄混血パーム」がある。<br>
+　↓　↓　　↓　<br>
+　点→横棒→３時→６時→十字（コーナー交換）⇒魚型十字<br>
+　　　　　↓→→→↑↓→亀・蝶・十字　　　　⇒魚型十字<br>
+　↓　↓<br>
+　点→横棒→３時⇒黄色一面<br><br>
+　ほとんどの場合が、次の３コースのクルクルムーブ後、クルクルパームとなる。<br>
+　・点ー棒ー三ー六（または、対角ムーブ省略ー棒ー三ー六）<br>
+　・棒ー六<br>
+　・三ー六<br>
+</details>
+　　<img src="https://mori1-hakua.tokyo/images/CUBE2.png" width=100>
+<img src="https://mori1-hakua.tokyo/images/CUBE3.png" width=100>
+<details><summary>
+(5)ものぐさ金魚<br>
+　黄色面の魚型を、下図のような横面を含むGoalFishの魚型に進化させる。<br>
+　基本的には、エッジ<font color=red>A'</font>とエッジ<font color=red>B'</font>の片方または双方のお迎えパームだけで進化する。<br>
+</summary>
+　・魚上層横３個が黄色無しの面（<font color=red>AA’</font>）の頭エッジ<font color=red>A’</font>色を<font color=red>C’</font>対面から取りに<br>　　お迎え回転（Up）<br>
+　・（<font color=red>AA’</font>）の対面（<font color=red>BB’</font>）の頭エッジ<font color=red>B’</font>色を<font color=red>C’</font>対面から取りにお迎え回転（Up）<br>
+　　　　エッジ２個が左右でなく相互対面（奥同志）にあるなら、十字交換（Hp）<br>
+　・黄色一面からの時は、３個同色の対面<font color=red>CC’</font>から（Up）実施で一気にゴールへ<br>
+　　　　　　　　　　　　３個同色無ければ、クルクルパーム後４）へ<br>
+</details>
+　<img src="https://mori1-hakua.tokyo/images/CUBE4.png" width=150>
+<img src="https://mori1-hakua.tokyo/images/CUBE5.png" width=150>
+<details><summary>
+(6)クルクルパームで一気にゴールへ<br>
+　<font color=red>⇩</font>の矢印位置から、左右クルクルパームを１発仕掛ける。</summary>
+
+　前のステップで、魚の頭片方の色をコーナーキューブと同じに揃え、対面の尻尾も、<br>
+　頭側コーナーの同色に揃えたことになる。<font color=red>A’B’C’</font>の色が三つともコーナーと合ったので、<br>
+　PLL段階をスキップし、<font color=red>CC'</font>の面を手前において、左右回転どちらかの手順で、<br>
+一気にゴールへ爽快感。<br>
+<details><summary>
+クルクルパーム（左手）:LUL’ULU2L’　　 右廻し（Xp-a）<br>
+　　　　　　　　 （右手）R’U’RU’R’U’2R  　左廻し (Xp-b)</summary>
+　　<img src="https://mori1-hakua.tokyo/images/L.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L-.gif" align="absmiddle">
+<br>
+　　<img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+</details>
+　<img src="https://mori1-hakua.tokyo/images/CUBE4.png" width=150>
+<img src="https://mori1-hakua.tokyo/images/CUBE5.png" width=150>
+<br>　矢印の位置から右廻し　 矢印の位置から左廻し<br>
+</details>
+　　　<img src="https://mori1-hakua.tokyo/images/CUBE9.png" width=120><br>
+　なお実績は、最終ターンがクルクルパーム９割、Hパーム１割という出現バランスです。<br>
+</div>
+<details><summary>　【動画】クルクルパームでFinish ！<br>
+</summary>　<video src="https://mori1-hakua.tokyo/images/CubeGoal.mp4" width=500 height=300 controls autoplay muted loop></video>
+</details>
+<details><summary>　【参考】暗記する５つの回転手順</summary>
+<details><summary>　クルクル<b>ムーブ:</b> R' U' F' U F R <button type="button" onclick="RotCopy(this)">コピー</button><br>
+　　上面の対角交換としても使われる。</summary>
+　　<img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/F-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/F.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+</details>
+<details><summary>　クルクル<b>パーム:</b> L U L' U L U2 L' <button type="button" onclick="RotCopy(this)">コピー</button> 　右廻し（Xp-a）<br>
+　　　　　　　　　 :<span> R' U' R U' R' U' 2R <button type="button" onclick="RotCopy(this)">コピー</button> 左廻し (Xp-b)</span></summary>
+　　<img src="https://mori1-hakua.tokyo/images/L.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L-.gif" align="absmiddle">
+<br>
+　　<img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+<br>
+　　開始位置によって、左廻し専用の「肩からパーム」「腰からパーム」<br>
+　　そして最終段階の左右廻し「黄混血パーム」があり、すべてクルクルパームである。
+</details>
+<details><summary>　隣接交換:<span> L R' U' R U L' U' R' U R <button type="button" onclick="RotCopy(this)">コピー</button></span></summary>
+　　隣接２個のコーナー交換が必要になっていれば、ここを右側に置いて次で確定する。<br>
+　　<img src="https://mori1-hakua.tokyo/images/L.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/L-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/R.gif" align="absmiddle">
+</details>
+<details><summary>　十字交換:<span> M2 U M2 U2 M2 U M2 <button type="button" onclick="RotCopy(this)">コピー</button>(Hp)</span><br>
+　　奥のエッジお迎えパームとして使われる。</summary>
+　　<img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+</details>
+<details><summary>　３エッジ回転移動:<span>  M2 U' M' U2 M U' M2 <button type="button" onclick="RotCopy(this)">コピー</button> （右迎え）(Up-b）</span><br>
+　　　　　　　　　　  :<span> M2 U M' U2 M U M2 <button type="button" onclick="RotCopy(this)">コピー</button>　（左迎え) (Up-a)</span><br>
+　　主に左右のエッジお迎えパームとして使われる。</summary>
+　　<img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+<br>
+　　<img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+</details>
+</details><br>
+<div id="Example">
+<details open><summary>　【事例】スクランブル例と、ものぐさソルブ　（85手）</summary>
+   <img src="https://mori1-hakua.tokyo/images/Rubik_scramble.png"><br>
+　　 <button type="button" onclick="openAll(document.getElementById('Example'))">全ソルブを開く</button>
+　　 <button type="button" onclick="openAll(document.getElementById('Example'),'')">全ソルブを閉じる</button><br>
+　　 <button type="button" onclick="fwdRot(this)">ごちゃ混ぜ</button>
+ *スクランブル17 L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L <button type="button" onclick="rvsRot(this)">戻す</button><br>
+　　　　　　　　<button type="button" onclick="rotSolve(this)">全ソルブ回転</button>
+<button type="button" onclick="pythonSolve()">自動解析回転</button>（自動解析は、記号列修正入力にも対応）
+</details>
+<details name="solve"><summary>　　(1)上層に白十字を作る<br>
+　　 　　横向きIT化優先で橙そのまま、青横、赤揃え。青上げ、橙上げの順番で緑準備。</summary>
+<p></p>
+</details>
+<details ><summary>　　(2)上層・中間層を同時に揃える<br>
+　　 　　黄色面を上に変え、効率良いIT化を優先する。
+</summary>
+<details name="solve"><summary>　　　・最下層を上にして、IT化された青橙ポストをスロットインする<br>
+　　 　　出来上がっているIT済み青橙２ポストから始める。
+</summary>
+<p></p>
+</details>
+<details name="solve"><summary>　　　・青赤エッジポストをコーナーポストの隣に寄せて、スロットインする<br>
+　　 　　上面で色がすぐに揃えられる青赤ポストから手を付ける。
+</summary>
+<p></p>
+</details>
+<details name="solve"><summary>　　　・赤緑エッジポストを桂馬アクセルで、スロットインする<br>
+　　 　　赤緑コーナーポストを上面白となるように回転し、桂馬位置にある赤緑エッジポストを、定石アクセル倒しで入れる。
+</summary>
+<p></p>
+</details>
+<details name="solve"><summary>　　　・緑橙ポストを桂馬ブレーキで、スロットインする<br>
+　　 　　緑橙コーナーポストを上面白にして、緑橙エッジポストを桂馬位置に離し、定石ブレーキ倒しで入れる。
+</summary>
+<p></p>
+</details>
+</details>
+<details "><summary>　　(3)上層面を黄色の魚型クロスにする</summary>
+<details name="solve"><summary>　　　・上層４コーナーの交換で正しい位置にする<br>
+　　 　　４コーナーの位置がX型でずれているので、クルクルムーブ１発で揃える。
+</summary>
+<p></p>
+</details>
+<details name="solve"><summary>　　　・三時→六時のムーブを実施する<br>
+　　 　　上面黄色が３時のパターンになっているので、クルクルムーブ２回の定石で魚型にする。
+</summary>
+<p></p>
+</details>
+</details>
+<details name="solve"><summary>　　(4)魚を「Goal Fish」形式にする<br>
+　　 　　エッジお迎えパーム２回(赤と緑)で、リーチの魚型にする。
+</summary>
+<p></p>
+</details>
+<details name="solve"><summary>　　(5)クルクルパームで一気にゴールへ<br>
+　　 　　黄色混血位置からのクルクルパームで黄色面を完成させる。
+</summary>
+<p></p>
+</details>
+<div id="rotResol">
+<details><summary> 　<strong>参考： 回転記号と3D Rubik's Cube の結果</strong>
+(<button type=button onclick="openSwin(this)">別窓</button>)
+(<button type=button onclick="openSwin(this,lang='en')">English</button>)</summary>
+
+<table><tr><td>　</td><td><iframe name="pythonQ" height="28px" width="800px" scrolling="yes" frameborder="0" src=""></iframe>
+</td></tr>
+<tr><td>　</td><td><iframe name="cube3df" height="580px" width="300px" scrolling="no" frameborder="0" src=""></iframe>
+</td><tr><td>　</td><td>スクランブルA:<span> L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L <button type="button" onclick="RotCopy(this)">コピー</button></span><br>
+</td><tr><td>　</td><td>スクランブルB:<span> R' U' F L F2 L2 B2 R F2 R2 F2 R' B' R' D U' F2 U2 R F U2 B' R' U' F <button type="button" onclick="RotCopy(this)">コピー</button></span><br>
+</td></tr>
+</table>
+</details>
+</div>
+</div><br>
+　　　　　　　　　<a href="https://mori1-hakua.tokyo/RCeasy.html">https://mori1-hakua.tokyo/RCeasy.html</a>
+  By N.Fujii　　<a href="javascript:location.reload(true)" title="詳細を閉じる"><b>Top</a><br><br>
+累積アクセス数：<iframe src="/count_img/countRC.php" height=30 width=140 frameborder="0" scrolling="no"></iframe>
