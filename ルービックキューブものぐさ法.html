@@ -64,7 +64,7 @@ function setLsner() {
     var pic = document.getElementsByName('solve')[i];
     eval('pic.addEventListener("toggle",function() {ptnset('+i+');})');
   }
-  window.open ("https://noriofujii.github.io/Solve-method/notation-3d.html","cube3df", 'height=580,width=320,dependent=yes,scrollbars=no');
+  window.open ("notation-3d.html","cube3df", 'height=580,width=320,dependent=yes,scrollbars=no');
   if (location.search.slice(0,8)=="?Example") {
     openAll(document.getElementById('Example'));
     location.hash = "Example";
@@ -75,7 +75,7 @@ function openSwin(obj,lang="jp") {
     obj.parentElement.parentElement.open == "";
     Rotates = "";
     
-    swin = window.open ((lang=="en"?"https://noriofujii.github.io/cubing/unfold-cube.html":"https://noriofujii.github.io/Solve-method/notation-3d.html"),
+    swin = window.open ((lang=="en"?"https://noriofujii.github.io/Cubing/unfold-cube.html":"notation-3d.html"),
            "cube3d", 'height=580,width=320,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
 }
 function openAll(obj,mode="open") {
