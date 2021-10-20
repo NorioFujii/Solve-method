@@ -48,7 +48,7 @@ function unfold(i,szin) {
     return (i>9&&i<19||i>27)?FaceF+i+szin+"f":i+szin+"e";
 }
 
-var Comment="", Tid = null, turnN=1, ClipDT="";
+var Comment="", Tid=null, turnN=1, ClipDT="", W=null;
 var Rotates = new Array();
 var RotSft = 0;
 function initnotscrambled(){
@@ -157,7 +157,7 @@ function pythonSolve() {
     setTimeout('ckPython()',1000); 
 }
 async function ckPython() {
-    if (!W.closed) {
+        if (!W.closed || (await clipIn()=="")) {
         setTimeout('ckPython()',1000);
         return;
     }
