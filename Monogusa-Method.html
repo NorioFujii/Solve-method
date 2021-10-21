@@ -60,7 +60,7 @@ function ptnset(i) {
     }
 }
 function setLsner() {
-  for (var i=0;i<8;i++) {
+  for (var i=0;i<9;i++) {
     var pic = document.getElementsByName('solve')[i];
     eval('pic.addEventListener("toggle",function() {ptnset('+i+');})');
   }
@@ -366,23 +366,28 @@ X-perm (left hand): L U L' U L U2 L'  right turn (Xp-a) <br>
 　　　　　　　　<button type="button" onclick="rotSolve(this)">All solve rotation</button>
 (Automatic analysis also supports symbol string correction input)
 </details>
-<details name="solve"><summary>　　(1) Create a white cross on the upper layer <br>
+<details name="solve"><summary>
+  (1) Create a white cross on the upper layer <br>
 　　 　　Priority is given to horizontal IT, and orange is left as it is, blue is horizontal, and red is aligned. Prepare green in the order of raising blue and raising orange.</summary>
 <p></p>
 </details>
-<details><summary>　　(2) Align the upper and middle layers at the same time <br>
+<details><summary>
+  (2) Align the upper and middle layers at the same time <br>
 　　 　　Change the yellow side to the top and give priority to efficient IT.
 </summary>
-<details name="solve"><summary>　　　・ With the bottom layer facing up, slot in the <br>
+<details name="solve"><summary>
+  ・ With the bottom layer facing up, slot in the <br>
 　　 　　IT-enabled blue-orange post. Start with the completed IT-completed blue-orange 2 post.
 </summary>
 <p></p>
 </details>
-<details name="solve"><summary>　　　・ Move the blue-red edge post next to the corner post, and start with the blue-red post <br>
+<details name="solve"><summary>
+  ・ Move the blue-red edge post next to the corner post, and start with the blue-red post <br>
 　　 　　where the colors are immediately aligned on the upper surface to be slotted in.</summary>
 <p></p>
 </details>
-<details name="solve"><summary>　　　・ Rotate the red-green edge post with Keima accelerator so that the <br>
+<details name="solve"><summary>
+  ・ Rotate the red-green edge post with Keima accelerator so that the <br>
 　　 　　red-green corner post that is slotted in is white on the top, and insert the red-green edge post at Keima position by defeating the joseki accelerator.
 </summary>
 <p></p>
@@ -394,24 +399,29 @@ X-perm (left hand): L U L' U L U2 L'  right turn (Xp-a) <br>
 <p></p>
 </details>
 </details>
-<details ><summary>　　(3) Make the upper surface a yellow fish-shaped cloth</summary>
-<details name="solve"><summary>　　　・ Correct the position by exchanging the upper 4 corners. Since the positions of the <br>
+<details ><summary>
+  (3) Make the upper surface a yellow fish-shaped cloth</summary>
+<details name="solve"><summary>
+  ・ Correct the position by exchanging the upper 4 corners. Since the positions of the <br>
 　　 　　4 corners are shifted by the X type, align them with one round and round move.
 </summary>
 <p></p>
 </details>
-　　　・ Move from 3 o'clock to 6 o'clock The <br>
+<details name="solve"><summary>
+　・ Move from 3 o'clock to 6 o'clock The <br>
 　　 　　yellow on the upper surface has a pattern of 3 o'clock, so make a fish shape with two regular moves.
 </summary>
 <p></p>
 </details>
 </details>
-<details name="solve"><summary>　　(4) Make the fish into a "Goal Fish" format <br>
+<details name="solve"><summary>
+  (4) Make the fish into a "Goal Fish" format <br>
 　　 　　Edge Pick-up perm 2 times (red and green) to make a reach fish type.
 </summary>
 <p></p>
 </details>
-<details name="solve"><summary>　　(5) Go to the goal at once <br>
+<details name="solve"><summary>
+  (5) Go to the goal at once <br>
 　　 　　with Kuru Kuru Palm Complete the yellow surface with Kuru Kuru Palm from the yellow mixed race position.
 </summary>
 <p></p>
