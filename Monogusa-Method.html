@@ -52,7 +52,7 @@ function ptnset(i) {
     var pic = document.getElementsByName('solve')[i].getElementsByTagName('p')[0];
     if ( pic.innerHTML=="") {
       pic.innerHTML = '　<button type="button" onclick="fwdRot(this)">'+ (solrote[i+1]==""?"0":String(solrote[i+1].replace(/\*\*,/,"").split(',').length)) +
-                      "手：</button> " + solrote[i+1].replace(/-/g,"'").replace(/,/g," ") +' <button type="button" onclick="rvsRot(this)">戻す</button><br>　';
+                      "Steps：</button> " + solrote[i+1].replace(/-/g,"'").replace(/,/g," ") +' <button type="button" onclick="rvsRot(this)">Undo</button><br>　';
       for (var ar of solrote[i+1].split(',')) {
         if ((ar!="") && (ar!="**"))
             pic.innerHTML += '<img src="images/'+ar+'.gif">';
@@ -138,7 +138,6 @@ function openOnly(obj) {
     openAll(document.getElementById("rotResol"));
 }
 </script>
-<link type="text/css" rel="stylesheet" charset="UTF-8" href="css/translateelement.css">
 </head>
 <body background="images/nth_wood_blocks_bg.gif" bgcolor="#F8E2C7" onload="setLsner()">
 <h1 title="With an inertial solve, you can turn it without worrying and complete it in 2 minutes!">Rubik's Cube <font size="3">Monogusa</font> Method　　　4th Edition 2021.10.20</font></font></h1>
@@ -251,23 +250,23 @@ Solve through the following 6 steps (some skips exist moderately each time).
 exhilaration to a stretch goal.<br>
 
 <details><summary>
-X-perm (left hand): LUL'ULU2L'right turn (Xp-a) <br>
-　　　　　　　　 (right hand) R'U'RU'R'U'2R left turn (Xp-b)</summary>
-　　<img src="images/L.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/L-.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/L.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U2.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/L-.gif" align="absmiddle">
+X-perm (left hand): L U L' U L U2 L'  right turn (Xp-a) <br>
+　　　　　　　　 (right hand) R' U' R U' R' U'2 R   left turn (Xp-b)</summary>
+　　<img src="images/L.gif" align="absmiddle">
+→ <img src="images/U.gif" align="absmiddle">
+→ <img src="images/L-.gif" align="absmiddle">
+→ <img src="images/U.gif" align="absmiddle">
+→ <img src="images/L.gif" align="absmiddle">
+→ <img src="images/U2.gif" align="absmiddle">
+→ <img src="images/L-.gif" align="absmiddle">
 <br>
-　　<img src="images/R-.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U-.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/R.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U-.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/R-.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U-2.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/R.gif" align="absmiddle">
+　　<img src="images/R-.gif" align="absmiddle">
+→ <img src="images/U-.gif" align="absmiddle">
+→ <img src="images/R.gif" align="absmiddle">
+→ <img src="images/U-.gif" align="absmiddle">
+→ <img src="images/R-.gif" align="absmiddle">
+→ <img src="images/U-2.gif" align="absmiddle">
+→ <img src="images/R.gif" align="absmiddle">
 </details>
 　<img src="images/CUBE4.png" width="150">
 <img src="images/CUBE5.png" width="150">
@@ -283,18 +282,18 @@ X-perm (left hand): LUL'ULU2L'right turn (Xp-a) <br>
 </summary>　<video src="images/CubeGoal.mp4" width="500" height="300" controls="" autoplay="" muted="" loop=""></video>
 </details>
 <details><summary>　[Reference] 5 rotation procedures to memorize</summary>
-<details><summary>　　X <b>Move:</b> R'U'F' UFR<button type="button" onclick="RotCopy(this)">copy</button><br>
+<details><summary>　　X <b>Move:</b> R' U' F' U F R <button type="button" onclick="RotCopy(this)">Copy</button><br>
   
 　　It is also used as a diagonal exchange on the top surface.</summary>
 　　<img src="images/R-.gif" align="absmiddle">
-￫</font></font><img src="images/U-.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/F-.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/F.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/R.gif" align="absmiddle">
+→ <img src="images/U-.gif" align="absmiddle">
+→ <img src="images/F-.gif" align="absmiddle">
+→ <img src="images/U.gif" align="absmiddle">
+→ <img src="images/F.gif" align="absmiddle">
+→ <img src="images/R.gif" align="absmiddle">
 </details>
-<details><summary>　X <b>perm:</b> LUL'UL U2 L'<button type="button" onclick="RotCopy(this)">copy</button> 　右廻し（Xp-a）<br>
-　　　　　　　　　 :<span> R' U' R U' R' U' 2R <button type="button" onclick="RotCopy(this)">コピー</button> 左廻し (Xp-b)</span></summary>
+<details><summary>　X <b>perm:</b> L U L' U L U2 L' <button type="button" onclick="RotCopy(this)">Copy</button> 　CW（Xp-a）<br>
+　　　　　　　　　 :<span> R' U' R U' R' U' 2R <button type="button" onclick="RotCopy(this)">Copy</button> CCW (Xp-b)</span></summary>
 　　<img src="images/L.gif" align="absmiddle">
 → <img src="images/U.gif" align="absmiddle">
 → <img src="images/L-.gif" align="absmiddle">
@@ -314,7 +313,7 @@ X-perm (left hand): LUL'ULU2L'right turn (Xp-a) <br>
 　　開始位置によって、左廻し専用の「肩からパーム」「腰からパーム」<br>
 　　そして最終段階の左右廻し「黄混血パーム」があり、すべてクルクルパームである。
 </details>
-<details><summary>　隣接交換:<span> L R' U' R U L' U' R' U R <button type="button" onclick="RotCopy(this)">コピー</button></span></summary>
+<details><summary>　Nabor Exchange:<span> L R' U' R U L' U' R' U R <button type="button" onclick="RotCopy(this)">Copy</button></span></summary>
 　　隣接２個のコーナー交換が必要になっていれば、ここを右側に置いて次で確定する。<br>
 　　<img src="images/L.gif" align="absmiddle">
 → <img src="images/R-.gif" align="absmiddle">
@@ -327,7 +326,7 @@ X-perm (left hand): LUL'ULU2L'right turn (Xp-a) <br>
 → <img src="images/U.gif" align="absmiddle">
 → <img src="images/R.gif" align="absmiddle">
 </details>
-<details><summary>　十字交換:<span> M2 U M2 U2 M2 U M2 <button type="button" onclick="RotCopy(this)">コピー</button>(Hp)</span><br>
+<details><summary>　Cross Exchange:<span> M2 U M2 U2 M2 U M2 <button type="button" onclick="RotCopy(this)">Copy</button>(Hp)</span><br>
 　　奥のエッジお迎えパームとして使われる。</summary>
 　　<img src="images/M180u.gif" align="absmiddle">
 → <img src="images/U.gif" align="absmiddle">
@@ -337,24 +336,24 @@ X-perm (left hand): LUL'ULU2L'right turn (Xp-a) <br>
 → <img src="images/U.gif" align="absmiddle">
 → <img src="images/M180u.gif" align="absmiddle">
 </details>
-<details><summary>　3-edge rotation movement: <span>  M2 U'M' U2 MU' M2<button type="button" onclick="RotCopy(this)">copy</button>(Right pick up) (Up-b)</span><br> 
-　　　　　　　　　　  :<span>M2 </span><span>UM'U2 </span><span>MU M2<button type="button" onclick="RotCopy(this)">copy</button>　(Left)</span><br>
+<details><summary>　3-edge rotation movement: <span>  M2 U' M' U2 M U' M2<button type="button" onclick="RotCopy(this)">Copy</button>(Right pick up) (Up-b)</span><br> 
+　　　　　　　　　　  :<span>M2 </span><span>UM'U2 </span><span> M U M2 <button type="button" onclick="RotCopy(this)">Copy</button>　(Left)</span><br>
 　　pick-up <span>) (Up-a)</span> Mainly used as a left and right edge pick-up perm.</summary>
 　　<img src="images/M180u.gif" align="absmiddle">
-￫</font></font><img src="images/U-.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/Rc-.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U2.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/Rc.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U-.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/M180u.gif" align="absmiddle">
+→ <img src="images/U-.gif" align="absmiddle">
+→ <img src="images/Rc-.gif" align="absmiddle">
+→ <img src="images/U2.gif" align="absmiddle">
+→ <img src="images/Rc.gif" align="absmiddle">
+→ <img src="images/U-.gif" align="absmiddle">
+→ <img src="images/M180u.gif" align="absmiddle">
 <br>
-　　<img src="images/M180u.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/Rc-.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U2.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/Rc.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/U.gif" align="absmiddle"><font style="vertical-align: inherit;">
-￫</font></font><img src="images/M180u.gif" align="absmiddle">
+　　<img src="images/M180u.gif" align="absmiddle">
+→ <img src="images/U.gif" align="absmiddle">
+→ <img src="images/Rc-.gif" align="absmiddle">
+→ <img src="images/U2.gif" align="absmiddle">
+→ <img src="images/Rc.gif" align="absmiddle">
+→ <img src="images/U.gif" align="absmiddle">
+→ <img src="images/M180u.gif" align="absmiddle">
 </details>
 </details><br>
 <div id="Example">
@@ -363,13 +362,13 @@ X-perm (left hand): LUL'ULU2L'right turn (Xp-a) <br>
 　　 <button type="button" onclick="openAll(document.getElementById('Example'))">Open all solves</button>
 　　 <button type="button" onclick="openAll(document.getElementById('Example'),'')">Close all solves</button><br>
 　　 <button type="button" onclick="fwdRot(this)">Scramble</button>
- * Scramble 17 L'R2 U2 F2 U2 F2 D'R2 D'FU'LD'RD' F'L <button type="button" onclick="rvsRot(this)">return</button><br>
+ * Scramble 17 L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L <button type="button" onclick="rvsRot(this)">Undo</button><br>
 　　　　　　　　<button type="button" onclick="rotSolve(this)">All solve rotation</button>
 (Automatic analysis also supports symbol string correction input)
 </details>
 <details name="solve"><summary>　　(1) Create a white cross on the upper layer <br>
 　　 　　Priority is given to horizontal IT, and orange is left as it is, blue is horizontal, and red is aligned. Prepare green in the order of raising blue and raising orange.</summary>
-<p>　</p>
+<p></p>
 </details>
 <details><summary>　　(2) Align the upper and middle layers at the same time <br>
 　　 　　Change the yellow side to the top and give priority to efficient IT.
@@ -377,45 +376,45 @@ X-perm (left hand): LUL'ULU2L'right turn (Xp-a) <br>
 <details name="solve"><summary>　　　・ With the bottom layer facing up, slot in the <br>
 　　 　　IT-enabled blue-orange post. Start with the completed IT-completed blue-orange 2 post.
 </summary>
-<p>　</p>
+<p></p>
 </details>
 <details name="solve"><summary>　　　・ Move the blue-red edge post next to the corner post, and start with the blue-red post <br>
-　　 　　where the colors are immediately aligned on the upper surface to be slotted in .</summary>
-<p>　</p>
+　　 　　where the colors are immediately aligned on the upper surface to be slotted in.</summary>
+<p></p>
 </details>
 <details name="solve"><summary>　　　・ Rotate the red-green edge post with Keima accelerator so that the <br>
 　　 　　red-green corner post that is slotted in is white on the top, and insert the red-green edge post at Keima position by defeating the joseki accelerator.
 </summary>
-<p>　</p>
+<p></p>
 </details>
 <details name="solve"><summary>
   ・ Use the Keima brake to set the <br>
 　　 　　green-orange post, turn the green-orange corner post to white on the top, move the green-orange edge post to the Keima position, and push down the joseki brake.
 </summary>
-<p>　</p>
+<p></p>
 </details>
 </details>
 <details ><summary>　　(3) Make the upper surface a yellow fish-shaped cloth</summary>
 <details name="solve"><summary>　　　・ Correct the position by exchanging the upper 4 corners. Since the positions of the <br>
 　　 　　4 corners are shifted by the X type, align them with one round and round move.
 </summary>
-<p>　</p>
+<p></p>
 </details>
 　　　・ Move from 3 o'clock to 6 o'clock The <br>
 　　 　　yellow on the upper surface has a pattern of 3 o'clock, so make a fish shape with two regular moves.
 </summary>
-<p>　</p>
+<p></p>
 </details>
 </details>
 <details name="solve"><summary>　　(4) Make the fish into a "Goal Fish" format <br>
 　　 　　Edge Pick-up perm 2 times (red and green) to make a reach fish type.
 </summary>
-<p>　</p>
+<p></p>
 </details>
 <details name="solve"><summary>　　(5) Go to the goal at once <br>
 　　 　　with Kuru Kuru Palm Complete the yellow surface with Kuru Kuru Palm from the yellow mixed race position.
 </summary>
-<p>　</p>
+<p></p>
 </details>
 <div id="rotResol">
 <details><summary> 　<strong>Reference: Rotation symbols and 3D Rubik's Cube results</strong> 
@@ -424,8 +423,8 @@ X-perm (left hand): LUL'ULU2L'right turn (Xp-a) <br>
 <table><tbody><tr><td>　</td><td><iframe name="pythonQ" height="28px" width="800px" scrolling="yes" frameborder="0" src=""></iframe>
 </td></tr>
 <tr><td>　</td><td><iframe name="cube3df" height="580px" width="300px" scrolling="no" frameborder="0" src=""></iframe>
-</td></tr><tr><td>　</td><td>Scramble A: <span>L'R2 U2 F2 U2 F2 D'R2 D'FU'LD'RD' F'L<button type="button" onclick="RotCopy(this)">copy</button></span><br>
-</td></tr><tr><td>　</td><td>Scramble B: <span>R'U' FL F2 L2 B2 R F2 R2 F2 R'B'R'DU' F2 U2 RF U2 B'R' U'F<button type="button" onclick="RotCopy(this)">copy</button></span><br>
+</td></tr><tr><td>　</td><td>Scramble A: <span>L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L<button type="button" onclick="RotCopy(this)">Copy</button></span><br>
+</td></tr><tr><td>　</td><td>Scramble B: <span>R' U' F L F2 L2 B2 R F2 R2 F2 R' B' R' D U' F2 U2 R F U2 B' R' U' F<button type="button" onclick="RotCopy(this)">Copy</button></span><br>
 </td></tr>
 </tbody></table>
 </details>
@@ -433,4 +432,4 @@ X-perm (left hand): LUL'ULU2L'right turn (Xp-a) <br>
 </div><br>
 　　　　　　　　　<a href="https://noriofujii.github.io/Solve-method/%E3%83%AB%E3%83%BC%E3%83%93%E3%83%83%E3%82%AF%E3%82%AD%E3%83%A5%E3%83%BC%E3%83%96%E7%B0%A1%E5%8D%98%E8%A7%A3%E6%B3%95.html">Easy method original</a> 
   By N.Fujii　　<a href="javascript:location.reload(true)" title="Close details"><b>Top</b></a><b><br><br>
-</b><div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="goog-te-spinner" width="96px" height="96px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div></body></html>
+</div></div></body></html>
