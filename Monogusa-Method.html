@@ -64,7 +64,7 @@ function setLsner() {
     var pic = document.getElementsByName('solve')[i];
     eval('pic.addEventListener("toggle",function() {ptnset('+i+');})');
   }
-  window.open ("notation-3d.html","cube3df", 'height=580,width=320,dependent=yes,scrollbars=no');
+  window.open ("https://noriofujii.github.io/Cubing/unfold-cube.html","cube3df", 'height=580,width=320,dependent=yes,scrollbars=no');
   if (location.search.slice(0,8)=="?Example") {
     openAll(document.getElementById('Example'));
     location.hash = "Example";
