@@ -95,6 +95,7 @@ function rvsRot(obj){
     restart("");
 }
 function restart(rot) {
+    ClipDT = rot;
     document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
     if (swin) {
         swin.focus();
