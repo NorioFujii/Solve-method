@@ -60,7 +60,7 @@ function ptnset(i) {
     }
 }
 function setLsner() {
-  for (var i=0;i<9;i++) {
+  for (var i=0;i<8;i++) {
     var pic = document.getElementsByName('solve')[i];
     eval('pic.addEventListener("toggle",function() {ptnset('+i+');})');
   }
@@ -362,7 +362,7 @@ X-perm (left hand): LUL'ULU2L'right turn (Xp-a) <br>
    <img src="images/Rubik_scramble.png"><br>
 　　 <button type="button" onclick="openAll(document.getElementById('Example'))">Open all solves</button>
 　　 <button type="button" onclick="openAll(document.getElementById('Example'),'')">Close all solves</button><br>
-　　 <button type="button" onclick="fwdRot(this)">Jumble</button>
+　　 <button type="button" onclick="fwdRot(this)">Scramble</button>
  * Scramble 17 L'R2 U2 F2 U2 F2 D'R2 D'FU'LD'RD' F'L <button type="button" onclick="rvsRot(this)">return</button><br>
 　　　　　　　　<button type="button" onclick="rotSolve(this)">All solve rotation</button>
 (Automatic analysis also supports symbol string correction input)
