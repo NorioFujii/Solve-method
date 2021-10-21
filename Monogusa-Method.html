@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en" class="translated-ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="認知症予防,簡単,２分">
+<title>Rubik's Cube Monogusa Method</title>
+<meta property="og:url" content="https://mori1-hakua.tokyo/RCeasy.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ルービックキューブ簡単解法">
+<meta property="og:description" content="認知症予防,簡単,２分">
+<meta property="og:image" content="images/CUBE4.png">
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style type="text/css">
+summary:hover {
+  cursor: pointer; /* カーソルを指マークに */
+  background-color: #EFEFEF;
+}
+</style>
+<script type="text/javascript">
+var ClipDT  = "";
+var swin = null;
+var Rotates = "";
+var solrote = new Array(); note = new Array();
+solrote[0] = "";
+solrote[1] = "**,R,U2,B,L-,D,F2";
+solrote[2] = "X2,F,U-,F-";
+solrote[3] = "F-,U2,F,R,U-2,R-";
+solrote[4] = "U,B-,U2,B,U-2,B-,U,B,U-,B-,U,B2,U-,B-";
+solrote[5] = "U,L,U2,L-,U,L,U,L-,U,L,U-,L-";
+solrote[6] = "R-,U-,F-,U,F,R";
+solrote[7] = "R-,U-,F-,U,F,R,F-,U-,L-,U,L,F";
+solrote[8] = "Y,M2,U,M-,U2,M,U,M2,Y2,M2,U-,M-,U2,M,U-,M2";
+solrote[9] = "U,L,U,L-,U,L,U2,L-,U";
+note[1] = "白面十字揃え";
+note[2] = "ものぐさ連帰(青橙)";
+note[3] = "ものぐさ連帰(青赤)";
+note[4] = "ものぐさ連帰(赤緑)";
+note[5] = "ものぐさ連帰(緑橙)";
+note[6] = "対角交換";
+note[7] = "クルクルムーブ２回";
+note[8] = "お迎えパーム２回";
+note[9] = "混血クルクルパー厶";
+
+function ptnset(i) {
+    var pic = document.getElementsByName('solve')[i].getElementsByTagName('p')[0];
+    if ( pic.innerHTML=="") {
+      pic.innerHTML = '　<button type="button" onclick="fwdRot(this)">'+ (solrote[i+1]==""?"0":String(solrote[i+1].replace(/\*\*,/,"").split(',').length)) +
+                      "手：</button> " + solrote[i+1].replace(/-/g,"'").replace(/,/g," ") +' <button type="button" onclick="rvsRot(this)">戻す</button><br>　';
+      for (var ar of solrote[i+1].split(',')) {
+        if ((ar!="") && (ar!="**"))
+            pic.innerHTML += '<img src="images/'+ar+'.gif">';
+      }
+    }
+}
+function setLsner() {
+  for (var i=0;i<9;i++) {
+    var pic = document.getElementsByName('solve')[i];
+    eval('pic.addEventListener("toggle",function() {ptnset('+i+');})');
+  }
+  window.open ("notation-3d.html","cube3df", 'height=580,width=320,dependent=yes,scrollbars=no');
+  if (location.search.slice(0,8)=="?Example") {
+    openAll(document.getElementById('Example'));
+    location.hash = "Example";
+  }
+}
+function openSwin(obj,lang="jp") {
+    if (swin) swin.clearTimeout(swin.Tid);
+    obj.parentElement.parentElement.open == "";
+    Rotates = "";
+    
+    swin = window.open ((lang=="en"?"https://noriofujii.github.io/Cubing/unfold-cube.html":"notation-3d.html"),
+           "cube3d", 'height=580,width=320,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
+}
+function openAll(obj,mode="open") {
+    for (var detal of obj.getElementsByTagName("details"))
+        detal.open = mode;
+//        if (mode=="") detal.removeAttribute('open');
+}
+function fwdRot(obj){
+    var seq = obj.nextSibling.wholeText.trim();
+    openOnly(obj);
+    Rotates += seq;
+    restart(seq);
+}
+function rvsRot(obj){
+    var seq = obj.previousSibling.wholeText.trim();
+    Rotates += "! " + seq;
+    restart("");
+}
+function restart(rot) {
+    ClipDT = rot;
+    document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
+    if (swin) {
+        swin.focus();
+        if ((swin.closed) && !cube3df.Tid)
+            cube3df.setTimeout("cube3df.checkRot()",100);
+    }
+}
+function rotSolve(obj) {
+    openOnly(obj);
+    Rotates = "*"; rot = "";
+    for (i=1;i<10;i++) Rotates += "*"+note[i]+" "+solrote[i].replace(/-/g,"'").replace(/,/g," ") + " ";
+    Rotates += "*ソルブ完了 X2 ";
+    for (i=1;i<10;i++) rot += solrote[i].replace(/-/g,"'").replace(/,/g," ") + " ";
+    document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
+}
+function pythonSolve() {
+    rotation = "";
+    if (ClipDT && (ClipDT!="")) {
+        rotation = encodeURIComponent(ClipDT.trim());
+        if (rotation.charAt(0)=="*")
+            rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
+        document.getElementById('Example').getElementsByTagName('button')[3].previousSibling.textContent = ClipDT;
+    }
+    document.getElementsByName('pythonQ')[0].contentWindow.location.replace('https://mori1-hakua.tokyo/python/Cube2phase_Fast2.py?value1='+rotation);
+
+}
+function RotCopy(obj){
+    document.getElementsByName('pythonQ')[0].contentWindow.location.replace('about:blank');
+    ClipDT = obj.previousSibling.wholeText.trim();
+    navigator.clipboard.writeText(ClipDT);
+}
+function openOnly(obj) {
+    openAll(document.getElementById('Example'),'');
+    upper = obj.parentElement.parentElement.parentElement;
+    if (upper.tagName=="DETAILS") {
+        upper.open = "open";
+        openAll(upper,'');
+    }
+    obj.parentElement.parentElement.open = "open";
+    openAll(document.getElementById("rotResol"));
+}
+</script>
+<link type="text/css" rel="stylesheet" charset="UTF-8" href="css/translateelement.css">
+</head>
+<body background="images/nth_wood_blocks_bg.gif" bgcolor="#F8E2C7" onload="setLsner()">
+<h1 title="With an inertial solve, you can turn it without worrying and complete it in 2 minutes!"><font style="vertical-align: inherit;">Rubik's Cube </font><font size="3"><font style="vertical-align: inherit;">Monogusa</font> Law　4th Edition 2021.10.20</font></font></h1>
+<div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="images/translate_24dp.png" width="20" height="20" alt="Google 翻訳"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">原文</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">翻訳を改善する</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div><font size="3">
+<details open=""><summary><font style="vertical-align: inherit;">
+【prologue】</font></summary><font style="vertical-align: inherit;">
+While walking at 6.5km / h on a treadmill slope, using an environment where cognitive ability and thinking ability decline, </font><br>
+<font style="vertical-align: inherit;">
+trial and error dozens of procedures that do not reduce solve efficiency. </font><br>
+<font style="vertical-align: inherit;">We have found a method that can achieve reasonable results by balancing simplification and efficiency even in situations where judgment cannot be expected </font>.<br>
+
+<br><br>
+</details><font style="vertical-align: inherit;">
+When you're tired and sleepy, or when you're lacking in judgment, even this inertial solve can be done in about 90 moves. </font><br>
+<font style="vertical-align: inherit;">(I don't use the left and right moves, but remember the U palm used to pick up the edge.) The number of </font><br><font style="vertical-align: inherit;">mistakes is drastically reduced, there is no stagnation or rework, and the solve is about 90 seconds, which is super stable.</font><br>
+<br>
+　　 <button type="button" onclick="openAll(document.getElementById('Proc'))"><font style="vertical-align: inherit;">Open all solutions</font></button>
+   　<button type="button" onclick="openAll(document.getElementById('Proc'),'')"><font style="vertical-align: inherit;">Close all solutions</font></button><br>
+<div id="Proc"><font style="vertical-align: inherit;">
+Align through the following 6 steps (some skips exist moderately each time).</font>
+<details open=""><summary><font style="vertical-align: inherit;">
+(1) Creating a one-sided cross</font></summary>
+<font style="vertical-align: inherit;">
+　In the middle layer, arrange two horizontal same colors on three sides, and finally </font><br>
+<font style="vertical-align: inherit;">　raise four white edge posts vertically on the white side .
+</font></details>
+　　　<img src="images/CUBE0.png" width="120">
+
+<details open=""><summary><font style="vertical-align: inherit;">
+(2) Monogusa consecutive return to the </font><br><font style="vertical-align: inherit;">
+　yellow side Corner post with two from whitening F2L x 4 times
+</font></summary>
+<font style="vertical-align: inherit;">
+　・ If the corner post has a </font><br>
+<font style="vertical-align: inherit;">
+　　white top surface ,・ Depending on the top surface color of the edge cube at the position of </font><br>
+<font style="vertical-align: inherit;">
+　　　　Keima, use the Keima accelerator and Keima brake properly to slot in. </font><br>
+<font style="vertical-align: inherit;">
+　　However, if you defeat it and notice the unique Keima position pattern below, it is faster to defeat the post. </font><br>
+<font style="vertical-align: inherit;">
+　・ Other than white on the top surface</font><br>
+<font style="vertical-align: inherit;">
+　　・ If the color is the same, call </font><br>
+<font style="vertical-align: inherit;">
+　　the edge cube next to the corner post・ If the color is different, move the edge cube to the position of Keima with the corner and </font><br>
+<font style="vertical-align: inherit;">
+　　slot in each. </font><br><br>
+<font style="vertical-align: inherit;">
+　Keima Accelerator Case: Due to imaging, the </font><br>
+　　　<img src="images/MonoGF2L1.png" width="600"><br>
+<font style="vertical-align: inherit;">
+　same edge cube as the two colors of the white posts at each corner, which expresses the yellow surface as a white </font><br>
+<font style="vertical-align: inherit;">
+　surface, is placed at the position of Keima on the upper surface that matches the color of the center cube . </font><br>
+<font style="vertical-align: inherit;">
+　When raising white or Keima, </font><br>
+<font style="vertical-align: inherit;">
+　don't forget to rotate it sideways in advance so that the slots that can be broken come to the rear . 
+　Determine the sideways tilting direction of </font><br>
+<font style="vertical-align: inherit;">　the edge slot </font><br>
+<font style="vertical-align: inherit;">(“R” in the above example) so that the corner post can be aligned with the top color of the edge cube at Keima's position , and tilt it to accept the lateral rotation of the corner slot. </font><br>
+<font style="vertical-align: inherit;">
+　(It was If the first red color in the upper left circle painting, attention in the upper part of [R] [R '] rotation be reversed. </font><br><font style="vertical-align: inherit;">
+　　Each, knight accelerator, referred to as a knight brake, and joseki) </font><br>
+<font style="vertical-align: inherit;">
+　then , Return the edge slot vertically, rotate the upper layer 90 ° to reach the vertical rotation of the edge slot, </font><br>
+<font style="vertical-align: inherit;">
+　and after rotating the corner slot -90 ° back, return it vertically with the white facing down.</font><br>
+　　　<img src="images/modosi2.png"><br><font style="vertical-align: inherit;">
+　Don't forget to put back any slots that were affected by the edge rotation.
+
+</font></details>
+
+　　　<img src="images/CUBE1.png" width="120">
+<br><font style="vertical-align: inherit;">
+　In the 4th slot-in, it is also effective to mix it well with "removable with children".
+　If you feel a decline in " </font><a href="https://mori1-hakua.tokyo/BF2L.html"><font style="vertical-align: inherit;">Monogusa Renki</font></a><font style="vertical-align: inherit;"> ", there is also a means called &lt; </font><a href="https://mori1-hakua.tokyo/BF2L.html"><font style="vertical-align: inherit;">F2L for beginners</font></a><font style="vertical-align: inherit;"> &gt;.</font><br>
+<details open=""><summary><font style="vertical-align: inherit;">
+(3) Corner exchange </font><br><font style="vertical-align: inherit;">　4 Determine the position of the corner.</font></summary><font style="vertical-align: inherit;">
+　If there are two corner posts with the same color surface on one side, they are rotated to the surface of that color and the adjacent exchange is performed. </font><br>
+<font style="vertical-align: inherit;">
+　Adjacent exchange 80%, diagonal exchange (Kurukuru move) 10%, position of upper 4 corners confirmed. There is also no operation</font><br>
+</details>
+<details open=""><summary><font style="vertical-align: inherit;">
+(4) Creating a fish-shaped cross (basically the same as the simple solution)</font></summary><font style="vertical-align: inherit;">
+　After determining the positions of the four corners, the rotation proceeds along the shape of the yellow surface. </font><br>
+<font style="vertical-align: inherit;">
+　(Horizontal bar, twirl move at 3:06, then twirl palm ⇒ with fish shape) </font><br>
+<font style="vertical-align: inherit;">
+　Depending on the starting position,</font><br>
+<font style="vertical-align: inherit;">
+　　　・ Left-handed "shoulder to palm (cross side, butterfly, turtle front)" When </font><br>
+<font style="vertical-align: inherit;">
+　　　, left turn only "from the waist palm (KameteHiraki)" and </font><br>
+<font style="vertical-align: inherit;">
+　　　- the final stage of the left and right turn there is a "yellow Mixed Palm". </font><br>
+<font style="vertical-align: inherit;">
+　↓ ↓ ↓　</font><br>
+<font style="vertical-align: inherit;">
+　Point → Horizontal bar → 3 o'clock → 6 o'clock → Cross (corner exchange) ⇒ Fish-shaped cross </font><br>
+<font style="vertical-align: inherit;">
+　　　　　↓ → → → ↑ ↓ → Turtle, butterfly, cross ⇒ Fish-shaped cross </font><br>
+<font style="vertical-align: inherit;">
+　↓ ↓ </font><br>
+<font style="vertical-align: inherit;">
+　Point → Horizontal bar → 3 o'clock ⇒ Yellow On one side, in </font><br>
+<br><font style="vertical-align: inherit;">
+　most cases, it will be a twirl palm after the next three courses of twirl move. </font><br>
+<font style="vertical-align: inherit;">
+　・ Dot-bar-3-6 (or diagonal move omitted- </font><br>
+<font style="vertical-align: inherit;">
+　bar- 3-6)・ Bar-6</font><br>
+<font style="vertical-align: inherit;">
+　・3-6</font><br>
+
+</details>
+　　<img src="images/CUBE2.png" width="100">
+<img src="images/CUBE3.png" width="100">
+<details open=""><summary><font style="vertical-align: inherit;">
+(5) Monogusa Goldfish </font><br>
+<font style="vertical-align: inherit;">
+　Evolve the yellow-faced fish shape into a Goal Fish fish shape that includes the side surface as shown in the figure below. </font><br>
+<font style="vertical-align: inherit;">
+　Basically, edge </font></font><font color="red"><font style="vertical-align: inherit;">A '</font></font><font style="vertical-align: inherit;"> and edge </font></font><font color="red"><font style="vertical-align: inherit;">B'</font></font><font style="vertical-align: inherit;"> evolve only on one or both of the pick Palm.</font><br>
+
+</summary><font style="vertical-align: inherit;">
+　Fish upper horizontal three are surface without yellow ( </font></font><font color="red"><font style="vertical-align: inherit;">'AA</font></font><font style="vertical-align: inherit;"> head edge) </font></font><font color="red"><font style="vertical-align: inherit;">A'</font></font><font style="vertical-align: inherit;"> color </font></font><font color="red"><font style="vertical-align: inherit;">'C</font></font><font style="vertical-align: inherit;"> to take the facing </font><br>
+<font style="vertical-align: inherit;">　　pickup rotation (Up) </font><br>
+<font style="vertical-align: inherit;">
+　, ( </font></font><font color="red"><font style="vertical-align: inherit;">AA'</font></font><font style="vertical-align: inherit;"> ) of the facing ( </font></font><font color="red"><font style="vertical-align: inherit;">'BB</font></font><font style="vertical-align: inherit;"> head edge) </font></font><font color="red"><font style="vertical-align: inherit;">B'</font></font><font style="vertical-align: inherit;"> color the </font></font><font color="red"><font style="vertical-align: inherit;">'C</font></font><font style="vertical-align: inherit;"> pick rotated to pick up from the face (Up) </font><br>
+<font style="vertical-align: inherit;">
+　　　　if two edges are in mutual face-to-face rather than the left and right (rear comrade), cross exchange (Hp) </font><br>
+<font style="vertical-align: inherit;">
+　when from-yellow one aspect, three of the same color facing </font></font><font color="red"><font style="vertical-align: inherit;">CC'</font></font><font style="vertical-align: inherit;"> from (Up) </font><br>
+<font style="vertical-align: inherit;">
+　　　　　　　　　　　　Go to the goal at once if you do not have the same color, go to 4) after the twirl palm</font><br>
+
+</details>
+　<img src="images/CUBE4.png" width="150">
+<img src="images/CUBE5.png" width="150">
+<details open=""><summary><font style="vertical-align: inherit;">
+(6) </font><br>
+
+　<font color="red"><font style="vertical-align: inherit;">Go to</font></font><font style="vertical-align: inherit;"> the goal at once with </font><font color="red"><font style="vertical-align: inherit;">Kuru</font> Kuru Palm From the position of the arrow </font><font color="red"><font style="vertical-align: inherit;">⇩</font> , set one left and right Kuru Kuru Palm.</font></font></summary><font style="vertical-align: inherit;">
+
+　In the previous step, the color of one of the fish's heads was the same as the corner cube, and the tails facing each other were also </font><br>
+<font style="vertical-align: inherit;">
+　the same color as the head corners. </font></font><font color="red"><font style="vertical-align: inherit;">'A'B'C</font></font><font style="vertical-align: inherit;"> the color of there was a corner with three, </font><br>
+<font style="vertical-align: inherit;">
+　skip the PLL stage, </font></font><font color="red"><font style="vertical-align: inherit;">CC'</font></font><font style="vertical-align: inherit;"> in front of the face of, the left and right rotation either of the procedure, </font><br>
+<font style="vertical-align: inherit;">
+exhilaration to a stretch goal.</font><br>
+
+<details open=""><summary><font style="vertical-align: inherit;">
+Twirl palm (left hand): LUL'ULU2L'right turn (Xp-a) </font><br>
+<font style="vertical-align: inherit;">
+　　　　　　　　 (right hand) R'U'RU'R'U'2R left turn (Xp-b)</font></font></summary>
+　　<img src="images/L.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/L-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/L.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U2.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/L-.gif" align="absmiddle">
+<br>
+　　<img src="images/R-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/R.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/R-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U-2.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/R.gif" align="absmiddle">
+</details>
+　<img src="images/CUBE4.png" width="150">
+<img src="images/CUBE5.png" width="150">
+<br><font style="vertical-align: inherit;">　Turn clockwise from the position of the arrow Turn counterclockwise from the position of the arrow</font><br>
+
+</details>
+　　　<img src="images/CUBE9.png" width="120"><br><font style="vertical-align: inherit;">
+　In addition, the actual result is the appearance balance of 90% of Kuru Kuru Palm and 10% of H Palm in the final turn.</font><br>
+
+</div>
+<details><summary><font style="vertical-align: inherit;">　[Video] Finish with Kuru Kuru Palm!</font><br>
+
+</summary>　<video src="images/CubeGoal.mp4" width="500" height="300" controls="" autoplay="" muted="" loop=""></video>
+</details>
+<details><summary><font style="vertical-align: inherit;">　[Reference] 5 rotation procedures to memorize</font></font></summary>
+<details><summary><font style="vertical-align: inherit;">　Twirl </font></font><b><font style="vertical-align: inherit;">Move:</font></font></b><font style="vertical-align: inherit;"> R'U'F' UFR</font></font><button type="button" onclick="RotCopy(this)"><font style="vertical-align: inherit;">copy</font></font></button><br><font style="vertical-align: inherit;">
+　　It is also used as a diagonal exchange on the top surface.</font></font></summary>
+　　<img src="images/R-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/F-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/F.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/R.gif" align="absmiddle">
+</details>
+<details><summary><font style="vertical-align: inherit;">　Twirl </font></font><b><font style="vertical-align: inherit;">Palm:</font></font></b><font style="vertical-align: inherit;"> LUL'UL U2 L'</font></font><button type="button" onclick="RotCopy(this)"><font style="vertical-align: inherit;">copy</font></font></button> 　右廻し（Xp-a）<br>
+　　　　　　　　　 :<span> R' U' R U' R' U' 2R <button type="button" onclick="RotCopy(this)">コピー</button> 左廻し (Xp-b)</span></summary>
+　　<img src="images/L.gif" align="absmiddle">
+→ <img src="images/U.gif" align="absmiddle">
+→ <img src="images/L-.gif" align="absmiddle">
+→ <img src="images/U.gif" align="absmiddle">
+→ <img src="images/L.gif" align="absmiddle">
+→ <img src="images/U2.gif" align="absmiddle">
+→ <img src="images/L-.gif" align="absmiddle">
+<br>
+　　<img src="images/R-.gif" align="absmiddle">
+→ <img src="images/U-.gif" align="absmiddle">
+→ <img src="images/R.gif" align="absmiddle">
+→ <img src="images/U-.gif" align="absmiddle">
+→ <img src="images/R-.gif" align="absmiddle">
+→ <img src="images/U-2.gif" align="absmiddle">
+→ <img src="images/R.gif" align="absmiddle">
+<br>
+　　開始位置によって、左廻し専用の「肩からパーム」「腰からパーム」<br>
+　　そして最終段階の左右廻し「黄混血パーム」があり、すべてクルクルパームである。
+</details>
+<details><summary>　隣接交換:<span> L R' U' R U L' U' R' U R <button type="button" onclick="RotCopy(this)">コピー</button></span></summary>
+　　隣接２個のコーナー交換が必要になっていれば、ここを右側に置いて次で確定する。<br>
+　　<img src="images/L.gif" align="absmiddle">
+→ <img src="images/R-.gif" align="absmiddle">
+→ <img src="images/U-.gif" align="absmiddle">
+→ <img src="images/R.gif" align="absmiddle">
+→ <img src="images/U.gif" align="absmiddle">
+→ <img src="images/L-.gif" align="absmiddle">
+→ <img src="images/U-.gif" align="absmiddle">
+→ <img src="images/R-.gif" align="absmiddle">
+→ <img src="images/U.gif" align="absmiddle">
+→ <img src="images/R.gif" align="absmiddle">
+</details>
+<details><summary>　十字交換:<span> M2 U M2 U2 M2 U M2 <button type="button" onclick="RotCopy(this)">コピー</button>(Hp)</span><br>
+　　奥のエッジお迎えパームとして使われる。</summary>
+　　<img src="images/M180u.gif" align="absmiddle">
+→ <img src="images/U.gif" align="absmiddle">
+→ <img src="images/M180u.gif" align="absmiddle">
+→ <img src="images/U2.gif" align="absmiddle">
+→ <img src="images/M180u.gif" align="absmiddle">
+→ <img src="images/U.gif" align="absmiddle">
+→ <img src="images/M180u.gif" align="absmiddle">
+</details>
+<details><summary><font style="vertical-align: inherit;">　3-edge rotation movement: </font></font><span><font style="vertical-align: inherit;">  M2 U'M' U2 MU' M2</font></font><button type="button" onclick="RotCopy(this)"><font style="vertical-align: inherit;">copy</font></font></button><font style="vertical-align: inherit;">(Right pick up) (Up-b)</font></font></span><br><font style="vertical-align: inherit;"> 
+　　　　　　　　　　  : </font><span><font style="vertical-align: inherit;">M2 </font></span><span><font style="vertical-align: inherit;">UM'U2 </font></span></font><span><font style="vertical-align: inherit;">MU M2</font></font><button type="button" onclick="RotCopy(this)"><font style="vertical-align: inherit;">copy</font></font></button><font style="vertical-align: inherit;">　(Left</font></font></span><br><font style="vertical-align: inherit;"> 
+　　pick-up </font><span><font style="vertical-align: inherit;">) (Up-a)</font></span><font style="vertical-align: inherit;"> Mainly used as a left and right edge pick-up palm.</font></font></summary>
+　　<img src="images/M180u.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/Rc-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U2.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/Rc.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/M180u.gif" align="absmiddle">
+<br>
+　　<img src="images/M180u.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/Rc-.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U2.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/Rc.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/U.gif" align="absmiddle"><font style="vertical-align: inherit;">
+￫</font></font><img src="images/M180u.gif" align="absmiddle">
+</details>
+</details><br>
+<div id="Example">
+<details><summary><font style="vertical-align: inherit;">　[Case] ​​Scramble example and Monogusa Solve (85 moves)</font></font></summary>
+   <img src="images/Rubik_scramble.png"><br>
+　　 <button type="button" onclick="openAll(document.getElementById('Example'))"><font style="vertical-align: inherit;">Open all solves</font></font></button>
+　　 <button type="button" onclick="openAll(document.getElementById('Example'),'')"><font style="vertical-align: inherit;">Close all solves</font></font></button><br>
+　　 <button type="button" onclick="fwdRot(this)"><font style="vertical-align: inherit;">Jumble</font></font></button><font style="vertical-align: inherit;">
+ * Scramble 17 L'R2 U2 F2 U2 F2 D'R2 D'FU'LD'RD' F'L </font></font><button type="button" onclick="rvsRot(this)"><font style="vertical-align: inherit;">return</font></font></button><br>
+　　　　　　　　<button type="button" onclick="rotSolve(this)"><font style="vertical-align: inherit;">All solve rotation</font></font></button><font style="vertical-align: inherit;">
+(Automatic analysis also supports symbol string correction input)
+</font></font></details>
+<details name="solve"><summary><font style="vertical-align: inherit;">　　(1) Create a white cross on the upper layer </font><br>
+<font style="vertical-align: inherit;">
+　　 　　Priority is given to horizontal IT, and orange is left as it is, blue is horizontal, and red is aligned. Prepare green in the order of raising blue and raising orange.</font></font></summary>
+<p>　<button type="button" onclick="fwdRot(this)"><font style="vertical-align: inherit;">6 hands:</font></font></button><font style="vertical-align: inherit;"> ** R U2 BL'D F2 </font></font><button type="button" onclick="rvsRot(this)"><font style="vertical-align: inherit;">return</font></font></button><br>　<img src="images/R.gif"><img src="images/U2.gif"><img src="images/B.gif"><img src="images/L-.gif"><img src="images/D.gif"><img src="images/F2.gif"></p>
+</details>
+<details><summary><font style="vertical-align: inherit;">　　(2) Align the upper and middle layers at the same time </font><br>
+<font style="vertical-align: inherit;">
+　　 　　Change the yellow side to the top and give priority to efficient IT.
+</font></font></summary>
+<details name="solve"><summary><font style="vertical-align: inherit;">　　　・ With the bottom layer facing up, slot in the </font><br>
+<font style="vertical-align: inherit;">
+　　 　　IT-enabled blue-orange post. Start with the completed IT-completed blue-orange 2 post.
+</font></font></summary>
+<p>　<button type="button" onclick="fwdRot(this)"><font style="vertical-align: inherit;">4 hands:</font></font></button><font style="vertical-align: inherit;"> X2 FU'F' </font></font><button type="button" onclick="rvsRot(this)"><font style="vertical-align: inherit;">return</font></font></button><br>　<img src="images/X2.gif"><img src="images/F.gif"><img src="images/U-.gif"><img src="images/F-.gif"></p>
+</details>
+<details name="solve"><summary><font style="vertical-align: inherit;">　　　・ Move the blue-red edge post next to the corner post, and start with the blue-red post </font><br>
+<font style="vertical-align: inherit;">
+　　 　　where the colors are immediately aligned on the upper surface to be slotted in .
+</font></font></summary>
+<p>　<button type="button" onclick="fwdRot(this)"><font style="vertical-align: inherit;">6 hands:</font></font></button><font style="vertical-align: inherit;"> F'U2 FR U'2 R' </font></font><button type="button" onclick="rvsRot(this)"><font style="vertical-align: inherit;">return</font></font></button><br>　<img src="images/F-.gif"><img src="images/U2.gif"><img src="images/F.gif"><img src="images/R.gif"><img src="images/U-2.gif"><img src="images/R-.gif"></p>
+</details>
+<details name="solve"><summary><font style="vertical-align: inherit;">　　　-Rotate the red-green edge post with Keima accelerator so that the </font><br>
+<font style="vertical-align: inherit;">
+　　 　　red-green corner post that is slotted in is white on the top, and insert the red-green edge post at Keima position by defeating the joseki accelerator.
+</font></font></summary>
+<p>　<button type="button" onclick="fwdRot(this)"><font style="vertical-align: inherit;">14 hands:</font></font></button><font style="vertical-align: inherit;"> UB'U2 B U'2 B'UBU'B'U B2 U'B' </font></font><button type="button" onclick="rvsRot(this)"><font style="vertical-align: inherit;">return</font></font></button><br>　<img src="images/U.gif"><img src="images/B-.gif"><img src="images/U2.gif"><img src="images/B.gif"><img src="images/U-2.gif"><img src="images/B-.gif"><img src="images/U.gif"><img src="images/B.gif"><img src="images/U-.gif"><img src="images/B-.gif"><img src="images/U.gif"><img src="images/B2.gif"><img src="images/U-.gif"><img src="images/B-.gif"></p>
+</details>
+<details name="solve"><summary><font style="vertical-align: inherit;">　　　・ Use the Keima brake to set the </font><br>
+<font style="vertical-align: inherit;">
+　　 　　green-orange post, turn the green-orange corner post to white on the top, move the green-orange edge post to the Keima position, and push down the joseki brake.
+</font></font></summary>
+<p>　<button type="button" onclick="fwdRot(this)"><font style="vertical-align: inherit;">12 hands:</font></font></button><font style="vertical-align: inherit;"> UL U2 L'ULUL' ULU' L' </font></font><button type="button" onclick="rvsRot(this)"><font style="vertical-align: inherit;">return</font></font></button><br>　<img src="images/U.gif"><img src="images/L.gif"><img src="images/U2.gif"><img src="images/L-.gif"><img src="images/U.gif"><img src="images/L.gif"><img src="images/U.gif"><img src="images/L-.gif"><img src="images/U.gif"><img src="images/L.gif"><img src="images/U-.gif"><img src="images/L-.gif"></p>
+</details>
+</details>
+<details "=""><summary><font style="vertical-align: inherit;">　　(3) Make the upper surface a yellow fish-shaped cloth</font></font></summary>
+<details name="solve"><summary><font style="vertical-align: inherit;">　　　・ Correct the position by exchanging the upper 4 corners. Since the positions of the </font><br>
+<font style="vertical-align: inherit;">
+　　 　　4 corners are shifted by the X type, align them with one round and round move.
+</font></font></summary>
+<p>　<button type="button" onclick="fwdRot(this)"><font style="vertical-align: inherit;">6 hands:</font></font></button><font style="vertical-align: inherit;"> R'U'F' UFR </font></font><button type="button" onclick="rvsRot(this)"><font style="vertical-align: inherit;">return</font></font></button><br>　<img src="images/R-.gif"><img src="images/U-.gif"><img src="images/F-.gif"><img src="images/U.gif"><img src="images/F.gif"><img src="images/R.gif"></p>
+</details>
+<details name="solve"><summary><font style="vertical-align: inherit;">　　　・ Move from 3 o'clock to 6 o'clock The </font><br>
+<font style="vertical-align: inherit;">
+　　 　　yellow on the upper surface has a pattern of 3 o'clock, so make a fish shape with two regular moves.
+</font></font></summary>
+<p>　<button type="button" onclick="fwdRot(this)"><font style="vertical-align: inherit;">12 hands:</font></font></button><font style="vertical-align: inherit;"> R'U'F' UFRF'U'L' ULF </font></font><button type="button" onclick="rvsRot(this)"><font style="vertical-align: inherit;">return</font></font></button><br>　<img src="images/R-.gif"><img src="images/U-.gif"><img src="images/F-.gif"><img src="images/U.gif"><img src="images/F.gif"><img src="images/R.gif"><img src="images/F-.gif"><img src="images/U-.gif"><img src="images/L-.gif"><img src="images/U.gif"><img src="images/L.gif"><img src="images/F.gif"></p>
+</details>
+</details>
+<details name="solve"><summary><font style="vertical-align: inherit;">　　(4) Make the fish into a "Goal Fish" format </font><br>
+<font style="vertical-align: inherit;">
+　　 　　Edge Pick-up Palm 2 times (red and green) to make a reach fish type.
+</font></font></summary>
+<p>　<button type="button" onclick="fwdRot(this)"><font style="vertical-align: inherit;">16 hands:</font></font></button><font style="vertical-align: inherit;"> Y M2 UM'U2 MU M2 Y2 M2 U'M' U2 MU' M2 </font></font><button type="button" onclick="rvsRot(this)"><font style="vertical-align: inherit;">return</font></font></button><br>　<img src="images/Y.gif"><img src="images/M2.gif"><img src="images/U.gif"><img src="images/M-.gif"><img src="images/U2.gif"><img src="images/M.gif"><img src="images/U.gif"><img src="images/M2.gif"><img src="images/Y2.gif"><img src="images/M2.gif"><img src="images/U-.gif"><img src="images/M-.gif"><img src="images/U2.gif"><img src="images/M.gif"><img src="images/U-.gif"><img src="images/M2.gif"></p>
+</details>
+<details name="solve"><summary><font style="vertical-align: inherit;">　　(5) Go to the goal at once </font><br>
+<font style="vertical-align: inherit;">
+　　 　　with Kuru Kuru Palm Complete the yellow surface with Kuru Kuru Palm from the yellow mixed race position.
+</font></font></summary>
+<p>　<button type="button" onclick="fwdRot(this)"><font style="vertical-align: inherit;">9 hands:</font></font></button><font style="vertical-align: inherit;"> ULUL'UL U2 L'U </font></font><button type="button" onclick="rvsRot(this)"><font style="vertical-align: inherit;">return</font></font></button><br>　<img src="images/U.gif"><img src="images/L.gif"><img src="images/U.gif"><img src="images/L-.gif"><img src="images/U.gif"><img src="images/L.gif"><img src="images/U2.gif"><img src="images/L-.gif"><img src="images/U.gif"></p>
+</details>
+<div id="rotResol">
+<details open=""><summary> 　<strong><font style="vertical-align: inherit;">Reference: Rotation symbols and 3D Rubik's Cube results</font></font></strong><font style="vertical-align: inherit;"> 
+(</font></font><button type="button" onclick="openSwin(this)"><font style="vertical-align: inherit;">Another window</font></font></button><font style="vertical-align: inherit;">) (</font></font><button type="button" onclick="openSwin(this,lang='en')" lang="en"><font style="vertical-align: inherit;">English</font></font></button><font style="vertical-align: inherit;">)</font></font></summary>
+
+<table><tbody><tr><td>　</td><td><iframe name="pythonQ" height="28px" width="800px" scrolling="yes" frameborder="0" src="images/saved_resource.html"></iframe>
+</td></tr>
+<tr><td>　</td><td><iframe name="cube3df" height="580px" width="300px" scrolling="no" frameborder="0" src="images/saved_resource(1).html"></iframe>
+</td></tr><tr><td>　</td><td><font style="vertical-align: inherit;">Scramble A: </font></font><span><font style="vertical-align: inherit;">L'R2 U2 F2 U2 F2 D'R2 D'FU'LD'RD' F'L</font></font><button type="button" onclick="RotCopy(this)"><font style="vertical-align: inherit;">copy</font></font></button></span><br>
+</td></tr><tr><td>　</td><td><font style="vertical-align: inherit;">Scramble B: </font></font><span><font style="vertical-align: inherit;">R'U' FL F2 L2 B2 R F2 R2 F2 R'B'R'DU' F2 U2 RF U2 B'R' U'F</font></font><button type="button" onclick="RotCopy(this)"><font style="vertical-align: inherit;">copy</font></font></button></span><br>
+</td></tr>
+</tbody></table>
+</details>
+</div>
+</div><br>
+　　　　　　　　　<a href="https://noriofujii.github.io/Solve-method/%E3%83%AB%E3%83%BC%E3%83%93%E3%83%83%E3%82%AF%E3%82%AD%E3%83%A5%E3%83%BC%E3%83%96%E7%B0%A1%E5%8D%98%E8%A7%A3%E6%B3%95.html"><font style="vertical-align: inherit;">Easy method original</font></font></a><font style="vertical-align: inherit;"> 
+  By N.Fujii　　</font></font><a href="javascript:location.reload(true)" title="Close details"><b><font style="vertical-align: inherit;">Top</font></font></b></a><b><br><br>
+</b></font><div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="goog-te-spinner" width="96px" height="96px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div></body></html>
