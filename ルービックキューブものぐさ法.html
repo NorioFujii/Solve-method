@@ -126,7 +126,7 @@ function RotCopy(obj){
     document.getElementsByName('pythonQ')[0].contentWindow.location.replace('about:blank');
     rot = obj.previousSibling.wholeText.trim();
     navigator.clipboard.writeText(rot);
-    Rotates += "*0 "+ rot;
+    Rotates += "*0 "+ rot + " **";
     restart(rot);
 }
 function openOnly(obj) {
