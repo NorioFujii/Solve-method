@@ -4,12 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="認知症予防,簡単,２分">
+<meta name="description" content="Dementia prevention,Easy,2 minutes">
 <title>Rubik's Cube Monogusa Method</title>
 <meta property="og:url" content="https://mori1-hakua.tokyo/RCeasy.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ルービックキューブ簡単解法">
-<meta property="og:description" content="認知症予防,簡単,２分">
+<meta property="og:title" content="Rubik's cube easy solve">
+<meta property="og:description" content="Dementia prevention,Easy,2 minutes">
 <meta property="og:image" content="images/CUBE4.png">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,15 +38,15 @@ solrote[6] = "R-,U-,F-,U,F,R";
 solrote[7] = "R-,U-,F-,U,F,R,F-,U-,L-,U,L,F";
 solrote[8] = "Y,M2,U,M-,U2,M,U,M2,Y2,M2,U-,M-,U2,M,U-,M2";
 solrote[9] = "U,L,U,L-,U,L,U2,L-,U";
-note[1] = "白面十字揃え";
-note[2] = "ものぐさ連帰(青橙)";
-note[3] = "ものぐさ連帰(青赤)";
-note[4] = "ものぐさ連帰(赤緑)";
-note[5] = "ものぐさ連帰(緑橙)";
-note[6] = "対角交換";
-note[7] = "クルクルムーブ２回";
-note[8] = "お迎えパーム２回";
-note[9] = "混血クルクルパー厶";
+note[1] = "White_cross";
+note[2] = "Monogusa_Renki(青橙)";
+note[3] = "Monogusa_Renki(青赤)";
+note[4] = "Monogusa_Renki(赤緑)";
+note[5] = "Monogusa_Renki(緑橙)";
+note[6] = "Exchange_Oposite";
+note[7] = "X-move_twice";
+note[8] = "X-perm_twice";
+note[9] = "X-perm_at_Ymix";
 
 function ptnset(i) {
     var pic = document.getElementsByName('solve')[i].getElementsByTagName('p')[0];
@@ -107,7 +107,7 @@ function rotSolve(obj) {
     openOnly(obj);
     Rotates = "*"; rot = "";
     for (i=1;i<10;i++) Rotates += "*"+note[i]+" "+solrote[i].replace(/-/g,"'").replace(/,/g," ") + " ";
-    Rotates += "*ソルブ完了 X2 ";
+    Rotates += "*Completed X2 ";
     for (i=1;i<10;i++) rot += solrote[i].replace(/-/g,"'").replace(/,/g," ") + " ";
     document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
 }
@@ -198,7 +198,7 @@ Solve through the following 6 steps (some skips exist moderately each time).
 
 　　　<img src="images/CUBE1.png" width="120"><br>
 　In the 4th slot-in, it is also effective to mix it well with "removable with children".
-　If you feel a decline in " <a href="https://mori1-hakua.tokyo/BF2L.html"><font style="vertical-align: inherit;">Monogusa Renki</font></a><font style="vertical-align: inherit;"> ", there is also a means called &lt; </font><a href="https://mori1-hakua.tokyo/BF2L.html"><font style="vertical-align: inherit;">F2L for beginners</font></a><font style="vertical-align: inherit;"> &gt;.</font><br>
+　If you feel a decline in "Monogusa Renki", there is also a means called &lt; <a href="https://mori1-hakua.tokyo/BF2L.html">F2L for beginners</a> &gt;.<br>
 <details><summary>
 (3) Corner exchange <br>
   4 Determine the position of the corner.</summary>
@@ -208,18 +208,18 @@ Solve through the following 6 steps (some skips exist moderately each time).
 <details><summary>
 (4) Creating a fish-shaped cross (basically the same as the simple solution)</summary>
   After determining the positions of the four corners, the rotation proceeds along the shape of the yellow surface. <br>
-　(Horizontal bar, X-perm move at 3,6,o'clock then X-perm ⇒ with fish shape) <br>
+　(Horizontal bar, X-move at 3,6,o'clock then X-perm ⇒ with fish shape) <br>
 　Depending on the starting position,<br>
-　　　・ Left-handed "shoulder to palm (cross side, butterfly, turtle front)" When <br>
-　　　, left turn only "from the waist perm (KameteHiraki)" and <br>
-　　　- the final stage of the left and right turn there is a "yellow Mixed Perm". <br>
+　　　・ Right-handed "from shoulder perm (Cross_both_side, Butterfly, Turtle_front_light)" <br>
+　　　・ Right-handed "from the waist perm (Turtle_hand_open)" <br>
+　　　・ the final stage of the left and right turn "yellow Mixed Perm". <br>
 　↓ ↓ ↓　<br>
-　Point → Horizontal bar → 3 o'clock → 6 o'clock → Cross (corner exchange) ⇒ Fish-shaped cross <br>
-　　　　　↓ → → → ↑ ↓ → Turtle, butterfly, cross ⇒ Fish-shaped cross <br>
+　Dot → Horizontal bar → 3 o'clock → 6 o'clock → Cross (corner exchange) ⇒ Fish-shaped cross <br>
+　　　↓ → → → ↑ ↓ → Turtle, butterfly, cross ⇒ Fish-shaped cross <br>
 　↓ ↓ <br>
-　Point → Horizontal bar → 3 o'clock ⇒ Yellow On one side, in <br>
+　Dot → Horizontal bar → 3 o'clock ⇒ Yellow on top side reach <br>
 <br>
-　most cases, it will be an X-perm after the next three courses of X move. <br>
+　most cases, it will be an X-perm after the next three courses after X-move. <br>
 　・ Dot-bar-3-6 (or diagonal move omitted-bar-3-6)
   ・ Bar-6<br>
 　・ 3-6<br>
@@ -235,14 +235,14 @@ Solve through the following 6 steps (some skips exist moderately each time).
 　　pickup rotation (Up), ( <font color="red">AA'</font> ) of the facing (<font color="red">'BB</font> head edge) <font color="red">B'</font> color the <font color="red">'C</font> pick rotated to pick up from the face (Up) <br>
 　　　　if two edges are in mutual face-to-face rather than the left and right (rear comrade), cross exchange (Hp) <br>
 　when from-yellow one aspect, three of the same color facing <font color="red">CC'</font> from (Up) <br>
-　Go to the goal at once if you do not have the same color, go to 4) after the X-perm<br>
+　Go to the goal at once if you do not have the same color, go to (4) after the X-perm<br>
 
 </details>
 　<img src="images/CUBE4.png" width="150">
 <img src="images/CUBE5.png" width="150">
 <details><summary>
-(6)<font color="red">Go to</font> the goal at once with <font color="red">Kuru Kuru perm</font> From the position of the arrow 
-  <font color="red">⇩</font> , set one left and right Kuru Kuru perm.</summary>
+(6)<font color="red">Go to</font> the goal at once with <font color="red">Kuru kuru perm</font> From the position of the arrow 
+  <font color="red">⇩</font> , set one left and right X-perm.</summary>
 
 　In the previous step, the color of one of the fish's heads was the same as the corner cube, and the tails facing each other were also <br>
 　the same color as the head corners. <font color="red">'A'B'C</font> the color of there was a corner with three, <br>
@@ -282,7 +282,7 @@ X-perm (left hand): L U L' U L U2 L'  right turn (Xp-a) <br>
 </summary>　<video src="images/CubeGoal.mp4" width="500" height="300" controls="" autoplay="" muted="" loop=""></video>
 </details>
 <details><summary>　[Reference] 5 rotation procedures to memorize</summary>
-<details><summary>　　X <b>Move:</b> R' U' F' U F R <button type="button" onclick="RotCopy(this)">Copy</button><br>
+<details><summary>　　X-<b>Move</b> R' U' F' U F R <button type="button" onclick="RotCopy(this)">Copy</button><br>
   
 　　It is also used as a diagonal exchange on the top surface.</summary>
 　　<img src="images/R-.gif" align="absmiddle">
@@ -292,7 +292,7 @@ X-perm (left hand): L U L' U L U2 L'  right turn (Xp-a) <br>
 → <img src="images/F.gif" align="absmiddle">
 → <img src="images/R.gif" align="absmiddle">
 </details>
-<details><summary>　X <b>perm:</b> L U L' U L U2 L' <button type="button" onclick="RotCopy(this)">Copy</button> 　CW（Xp-a）<br>
+<details><summary>　X-<b>perm</b> L U L' U L U2 L' <button type="button" onclick="RotCopy(this)">Copy</button> 　CW（Xp-a）<br>
 　　　　　　　　　 :<span> R' U' R U' R' U' 2R <button type="button" onclick="RotCopy(this)">Copy</button> CCW (Xp-b)</span></summary>
 　　<img src="images/L.gif" align="absmiddle">
 → <img src="images/U.gif" align="absmiddle">
@@ -310,12 +310,12 @@ X-perm (left hand): L U L' U L U2 L'  right turn (Xp-a) <br>
 → <img src="images/U-2.gif" align="absmiddle">
 → <img src="images/R.gif" align="absmiddle">
 <br>
-　　開始位置によって、左廻し専用の「肩からパーム」「腰からパーム」<br>
-　　そして最終段階の左右廻し「黄混血パーム」があり、すべてクルクルパームである。
+　　Beyond the position of starting, all 3 perms are right-hand-operation "from shoulder perm",<br>
+　　"from the waist perm" and the final stage of the left and right turn "yellow Mixed Perm".
 </details>
-<details><summary>　Nabor Exchange:<span> L R' U' R U L' U' R' U R <button type="button" onclick="RotCopy(this)">Copy</button></span></summary>
-　　隣接２個のコーナー交換が必要になっていれば、ここを右側に置いて次で確定する。<br>
-　　<img src="images/L.gif" align="absmiddle">
+<details><summary>　Neighbour Exchange:<span> L R' U' R U L' U' R' U R <button type="button" onclick="RotCopy(this)">Copy</button></span></summary>
+　　For exchanging neighbour 2 corners, right-hand turns this side.
+  　<img src="images/L.gif" align="absmiddle">
 → <img src="images/R-.gif" align="absmiddle">
 → <img src="images/U-.gif" align="absmiddle">
 → <img src="images/R.gif" align="absmiddle">
@@ -327,7 +327,7 @@ X-perm (left hand): L U L' U L U2 L'  right turn (Xp-a) <br>
 → <img src="images/R.gif" align="absmiddle">
 </details>
 <details><summary>　Cross Exchange:<span> M2 U M2 U2 M2 U M2 <button type="button" onclick="RotCopy(this)">Copy</button>(Hp)</span><br>
-　　奥のエッジお迎えパームとして使われる。</summary>
+　　Using for getting the edge post at opposite side.</summary>
 　　<img src="images/M180u.gif" align="absmiddle">
 → <img src="images/U.gif" align="absmiddle">
 → <img src="images/M180u.gif" align="absmiddle">
@@ -336,9 +336,9 @@ X-perm (left hand): L U L' U L U2 L'  right turn (Xp-a) <br>
 → <img src="images/U.gif" align="absmiddle">
 → <img src="images/M180u.gif" align="absmiddle">
 </details>
-<details><summary>　3-edge rotation movement: <span>  M2 U' M' U2 M U' M2<button type="button" onclick="RotCopy(this)">Copy</button>(Right pick up) (Up-b)</span><br> 
-　　　　　　　　　　  :<span>M2 </span><span>UM'U2 </span><span> M U M2 <button type="button" onclick="RotCopy(this)">Copy</button>　(Left)</span><br>
-　　pick-up <span>) (Up-a)</span> Mainly used as a left and right edge pick-up perm.</summary>
+<details><summary>　3-edge rotation movement: <span> M2 U' M' U2 M U' M2<button type="button" onclick="RotCopy(this)">Copy</button>(Right pick up) (Up-b)</span><br> 
+　　　　　　　　　　  :<span> M2 U M' U2 M U M2 <button type="button" onclick="RotCopy(this)">Copy</button>　(Left pick up)
+　　 (Up-a)</span> Mainly used as a left or right side edge pick-up.</summary>
 　　<img src="images/M180u.gif" align="absmiddle">
 → <img src="images/U-.gif" align="absmiddle">
 → <img src="images/Rc-.gif" align="absmiddle">
@@ -357,13 +357,13 @@ X-perm (left hand): L U L' U L U2 L'  right turn (Xp-a) <br>
 </details>
 </details><br>
 <div id="Example">
-<details><summary>　[Case Study] ​​Scramble example and Monogusa Solve (85 moves)</summary>
+<details><summary>　[Case Study] Scramble example and Monogusa Solve (85 moves)</summary>
    <img src="images/Rubik_scramble.png"><br>
 　　 <button type="button" onclick="openAll(document.getElementById('Example'))">Open all solves</button>
 　　 <button type="button" onclick="openAll(document.getElementById('Example'),'')">Close all solves</button><br>
 　　 <button type="button" onclick="fwdRot(this)">Scramble</button>
- * Scramble 17 L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L <button type="button" onclick="rvsRot(this)">Undo</button><br>
-　　　　　　　　<button type="button" onclick="rotSolve(this)">All solve rotation</button>
+ **Scramble 17 L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L <button type="button" onclick="rvsRot(this)">Undo</button><br>
+<button type="button" onclick="rotSolve(this)">All solve rotation</button>
 (Automatic analysis also supports symbol string correction input)
 </details>
 <details name="solve"><summary>
@@ -422,7 +422,7 @@ X-perm (left hand): L U L' U L U2 L'  right turn (Xp-a) <br>
 </details>
 <details name="solve"><summary>
   (5) Go to the goal at once <br>
-　　 　　with Kuru Kuru Palm Complete the yellow surface with Kuru Kuru Palm from the yellow mixed race position.
+　　 　　with Kuru Kuru perm Complete the yellow surface with Kuru Kuru perm from the yellow mixed race position.
 </summary>
 <p></p>
 </details>
