@@ -112,15 +112,29 @@ function rotSolve(obj) {
     document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
 }
 function pythonSolve() {
-    rotation = "";
-    if (ClipDT && (ClipDT!="")) {
-        rotation = encodeURIComponent(ClipDT.trim());
-        if (rotation.charAt(0)=="*")
-            rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
-        document.getElementById('Example').getElementsByTagName('button')[3].previousSibling.textContent = ClipDT;
+    window.open('python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
+    setTimeout('goPython()',100); 
+}
+function goPython() {
+    var rotation = "";
+    if (opener && opener.ClipDT && (opener.ClipDT!="")) ClipDT = opener.ClipDT;
+    rotation = encodeURIComponent(ClipDT.trim());
+    if (rotation.charAt(0)=="*")
+        rotation = encodeURIComponent(ClipDT.slice(ClipDT.indexOf(" ")+1).trim());
+    W = window.open('https://mori1-hakua.tokyo/python/Cube2phase_Fast2.py?value1='+rotation,"Python");
+    setTimeout('ckPython()',100); 
+}
+async function ckPython() {
+    if (!W.closed  || (await clipIn()=="")) {
+        setTimeout('ckPython()',1000);
+        return;
     }
-    document.getElementsByName('pythonQ')[0].contentWindow.location.replace('https://mori1-hakua.tokyo/python/Cube2phase_Fast2.py?value1='+rotation);
-
+    var rot = await clipIn();
+    setRot(regRot(rot.split(" ")));
+    clearTimeout(Tid);
+    setTimeout("checkRot()",100)
+    if (opener) 
+        opener.document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
 }
 function RotCopy(obj){
     document.getElementsByName('pythonQ')[0].contentWindow.location.replace('about:blank');
