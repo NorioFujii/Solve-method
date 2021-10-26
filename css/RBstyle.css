@@ -92,6 +92,7 @@ body {
   width: 88px;
 }
 .cube {
+        cursor: pointer;
 	position: relative;
 	width: 90px;
 	transform-style: preserve-3d;
