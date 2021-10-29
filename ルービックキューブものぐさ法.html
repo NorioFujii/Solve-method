@@ -71,12 +71,9 @@ function setLsner() {
   }
 }
 function openSwin(obj,lang="jp") {
-    if (swin) swin.clearTimeout(swin.Tid);
-    obj.parentElement.parentElement.open == "";
     Rotates = "";
-    
     swin = window.open ((lang=="en"?"/Cubing/unfold-cube.html":"notation-3d.html"),
-           "cube3d", 'height=480,width=480,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
+           "cube3d", 'height=480,width=580,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
 }
 function openAll(obj,mode="open") {
     for (var detal of obj.getElementsByTagName("details"))
