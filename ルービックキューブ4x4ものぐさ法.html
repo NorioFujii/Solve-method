@@ -67,7 +67,7 @@ function setLsner() {
     let frm = document.getElementsByName("cube3df")[0];
         if (window.outerWidth>600) frm.style.width="580px",frm.style.height="400px";
         else                       frm.style.width="360px",frm.style.height="640px";
-  window.open ("/Cubing/notation-3d-3.html","cube3df", 'dependent=yes,scrollbars=no');
+  window.open ("/Cubing/unfold-cube4.html","cube3df", 'dependent=yes,scrollbars=no');
   if (location.search.slice(0,8)=="?Example") {
     openAll(document.getElementById('Example'));
     location.hash = "Example";
@@ -77,7 +77,7 @@ function openSwin(obj,lang="en") {
 //    obj.parentElement.parentElement.open = "open";
     Rotates = "";
     
-    swin = window.open ((lang=="en"?"/Cubing/notation-3d-3.html":"/Cubing/notation-3d-3.html"),
+    swin = window.open ((lang=="en"?"/Cubing/unfold-cube4.html":"/Cubing/notation-3d-3.html"),
            "cube3d", 'height=600,width=380,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
 }
 function openAll(obj,mode="open") {
