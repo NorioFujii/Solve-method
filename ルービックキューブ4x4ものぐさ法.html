@@ -55,7 +55,7 @@ function ptnset(i) {
                       "手：</button> " + solrote[i+1].replace(/-/g,"'").replace(/,/g," ") +' <button type="button" onclick="rvsRot(this)">戻す</button><br>　';
       for (var ar of solrote[i+1].split(',')) {
         if ((ar!="") && (ar!="**"))
-            pic.innerHTML += '<img src="https://mori1-hakua.tokyo/images/'+ar+'.gif">';
+            pic.innerHTML += '<img src="/images/'+ar+'.gif">';
       }
     }
 }
@@ -67,17 +67,17 @@ function setLsner() {
     let frm = document.getElementsByName("cube3df")[0];
         if (window.outerWidth>600) frm.style.width="580px",frm.style.height="400px";
         else                       frm.style.width="360px",frm.style.height="640px";
-  window.open ("notation-3d-2.html","cube3df", 'dependent=yes,scrollbars=no');
+  window.open ("/Cubing/notation-3d-3.html","cube3df", 'dependent=yes,scrollbars=no');
   if (location.search.slice(0,8)=="?Example") {
     openAll(document.getElementById('Example'));
     location.hash = "Example";
   }
 }
-function openSwin(obj,lang="jp") {
+function openSwin(obj,lang="en") {
 //    obj.parentElement.parentElement.open = "open";
     Rotates = "";
     
-    swin = window.open ((lang=="en"?"https://noriofujii.github.io/Cubing/unfold-cube.html":"notation-3d-2.html"),
+    swin = window.open ((lang=="en"?"/Cubing/notation-3d-3.html":"/Cubing/notation-3d-3.html"),
            "cube3d", 'height=600,width=380,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
 }
 function openAll(obj,mode="open") {
@@ -162,37 +162,37 @@ function openOnly(obj) {
 　固定したいパーツは行き先で隠れスポットに回転させ保存、引き戻されないように踏ん張る。<br>
 　２個以上を隠すには、上げ波の線上でさらに上に上がるように置き、引き波で元の位置に戻して、<br>
 　隠れスポットに保存したパーツと合体させる。<a href="http://cubeland.curahome.net/4x4x4/solution1/step1/" target=_BLANK>参考リンク：</a><br>　
-　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_1_041.gif" width=120>
-　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_2.png" width=120>
+　　　<img src="/Cubing/images/4rc_1_1_041.gif" width=120>
+　　　<img src="/Cubing/images/4rc_1_2.png" width=120>
 </details>
-　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_4.gif" width=120>
+　　　<img src="/Cubing/images/4rc_1_4.gif" width=120>
 <details><summary>
 (1)白面十字形準備<br>
 　エッジポストを同色２個ずつペアで固定して、3x3解法に結び付ける。</summary>
 　12箇所と多いため、効率良く２箇所ずつ揃えられるように進める。<br>
 　次の３面配置A,Bとなるように外枠だけを回転させ、次の固定手順にてエッジペアを揃える。<br>
 　この時点では、２個のエッジの色が揃っていれば、各面の中央色と合っていなくてもよい。<br>
-　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_008.gif" width=100>
-　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_46.gif" width=100>
-　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_47.gif" width=100>
-　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_48.gif" width=100>
-　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_49.gif" width=100>
-　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_50.gif" width=100><br>
+　　　<img src="/Cubing/images/4rc_1_4_008.gif" width=100>
+　<img src="/Cubing/images/4rc_1_4_46.gif" width=100>
+　<img src="/Cubing/images/4rc_1_4_47.gif" width=100>
+　<img src="/Cubing/images/4rc_1_4_48.gif" width=100>
+　<img src="/Cubing/images/4rc_1_4_49.gif" width=100>
+　<img src="/Cubing/images/4rc_1_4_50.gif" width=100><br>
 　最後の中央エッジは、２箇所互いにクロスペアになり（左図）３面配置にできないことも起こる。<br>
-　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_91.gif" width=120>
-　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_92.gif" width=120><br>
+　　　<img src="/Cubing/images/4rc_1_4_91.gif" width=120>
+　　　<img src="/Cubing/images/4rc_1_4_92.gif" width=120><br>
 　この時、右図のキューブのようにエッジペアに並べるためには、次の手順による。<br>
-　　　<img src="https://mori1-hakua.tokyo/images/Rw-.png" width=80>
-　<img src="https://mori1-hakua.tokyo/images/F.png" width=80>
-　<img src="https://mori1-hakua.tokyo/images/U-.png" width=80>
-　<img src="https://mori1-hakua.tokyo/images/R_.png" width=80>
-　<img src="https://mori1-hakua.tokyo/images/F-.png" width=80>
-　<img src="https://mori1-hakua.tokyo/images/U.png" width=80>
-　<img src="https://mori1-hakua.tokyo/images/Rw.png" width=80><br>
+　　　<img src="/Cubing/images/Rw-.png" width=80>
+　<img src="/Cubing/images/F.png" width=80>
+　<img src="/Cubing/images/U-.png" width=80>
+　<img src="/Cubing/images/R_.png" width=80>
+　<img src="/Cubing/images/F-.png" width=80>
+　<img src="/Cubing/images/U.png" width=80>
+　<img src="/Cubing/images/Rw.png" width=80><br>
 　中央エッジが12箇所揃ったら、<a href="/ルービックキューブ簡単解法.html#Cross" target=_BLANK>3x3の要領</a>で、白面の十字形を揃える。<br>　
 </details>
-　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_3.gif" width=120>
-　　　<img src="https://mori1-hakua.tokyo/images/4rc_2_1_05.gif" width=120><br>
+　　　<img src="/Cubing/images/4rc_1_3.gif" width=120>
+　　　<img src="/Cubing/images/4rc_2_1_05.gif" width=120><br>
 
 <details><summary>
 (2)ものぐさ連帰<br>
