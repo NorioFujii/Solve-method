@@ -27,17 +27,18 @@ summary:hover, button:hover {
 var ClipDT  = "";
 var swin = null;
 var Rotates = "";
-var solrote = new Array(); note = new Array();
+var RotatesG = "";
+var solrote = new Array(), note = new Array();
 solrote[0] = "";
-solrote[1] = "**,R,U2,B,L-,D,F2";
-solrote[2] = "X2,F,U-,F-";
-solrote[3] = "F-,U2,F,R,U-2,R-";
-solrote[4] = "U,B-,U2,B,U-2,B-,U,B,U-,B-,U,B2,U-,B-";
-solrote[5] = "U,L,U2,L-,U,L,U,L-,U,L,U-,L-";
-solrote[6] = "R-,U-,F-,U,F,R";
-solrote[7] = "R-,U-,F-,U,F,R,F-,U-,L-,U,L,F";
-solrote[8] = "Y,M2,U,M-,U2,M,U,M2,Y2,M2,U-,M-,U2,M,U-,M2";
-solrote[9] = "U,L,U,L-,U,L,U2,L-,U";
+solrote[1] = "**,*#0812,R,*#1819,U2,B,*#3741,L-,*#3435,D,F2";
+solrote[2] = "X2,F,*#0509,U-,*#3435,F-";
+solrote[3] = "F-,*#0812,U2,F,R,U-2,R-";
+solrote[4] = "*#3435,U,B-,U2,B,U-2,B-,U,B,U-,B-,U,B2,U-,B-";
+solrote[5] = "*#0509,U,L,U2,*#3435,L-,U,L,U,L-,U,L,U-,*#0509,L-";
+solrote[6] = "*#1652,R-,U-,F-,U,F,R";
+solrote[7] = "*#0812,R-,U-,F-,U,F,R,*#1415,F-,U-,L-,U,L,F";
+solrote[8] = "Y,*#3435,M2,U,M-,U2,M,U,M2,Y2,*#3435,M2,U-,M-,U2,M,U-,M2";
+solrote[9] = "U,*#0105,L,U,L-,U,L,U2,L-,U";
 note[1] = "白面十字揃え";
 note[2] = "ものぐさ連帰(青橙)";
 note[3] = "ものぐさ連帰(青赤)";
@@ -51,33 +52,48 @@ note[9] = "混血クルクルパー厶";
 function ptnset(i) {
     var pic = document.getElementsByName('solve')[i].getElementsByTagName('p')[0];
     if ( pic.innerHTML=="") {
-      pic.innerHTML = '　<button type="button" onclick="fwdRot(this)">'+ (solrote[i+1]==""?"0":String(solrote[i+1].replace(/\*\*,/,"").split(',').length)) +
-                      "手：</button> " + solrote[i+1].replace(/-/g,"'").replace(/,/g," ") +' <button type="button" onclick="rvsRot(this)">戻す</button><br>　';
+      pic.innerHTML = '　<button type="button" onclick="fwdRot(this)">'+ (solrote[i+1]==""?"0":String(solrote[i+1].replace(/\*\*,/,"").split(',').length)-solrote[i+1].split("#").length+1) +
+                      "手：</button> " + solrote[i+1].replace(/-/g,"'").replace(/\*#\d+,/g,"").replace(/,/g," ") +' <button type="button" onclick="rvsRot(this)">戻す</button><br>　';
       for (var ar of solrote[i+1].split(',')) {
-        if ((ar!="") && (ar!="**"))
-            pic.innerHTML += '<img src="/images/'+ar+'.gif">';
+        if ((ar!="") && (ar.slice(0,1)!="*"))
+            pic.innerHTML += '<img src="https://mori1-hakua.tokyo/images/'+ar+'.gif">';
       }
     }
 }
 function setLsner() {
-  for (var i=0;i<9;i++) {
-    var pic = document.getElementsByName('solve')[i];
-    eval('pic.addEventListener("toggle",function() {ptnset('+i+');})');
-  }
-    let frm = document.getElementsByName("cube3df")[0];
+   for (var i=0;i<9;i++) {
+      var pic = document.getElementsByName('solve')[i];
+      eval('pic.addEventListener("toggle",function() {ptnset('+i+');})');
+   }
+   RotatesG = "*0 L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L U2 L' B' B' D' B R F' R' X X ** " ;
+   cube3dg.open ("notation-3d-2.html","cube3dg", 'dependent=yes,scrollbars=no');
+   let frm = document.getElementsByName("cube3df")[0];
         if (window.outerWidth>600) frm.style.width="580px",frm.style.height="400px";
         else                       frm.style.width="360px",frm.style.height="640px";
-  window.open ("/Cubing/unfold-cube4.html","cube3df", 'dependent=yes,scrollbars=no');
-  if (location.search.slice(0,8)=="?Example") {
-    openAll(document.getElementById('Example'));
-    location.hash = "Example";
-  }
+   window.open ("notation-3d-2.html","cube3df", 'dependent=yes,scrollbars=no');
+   if (location.search.slice(0,6)=="?Renki") {
+      document.getElementById('renki').open = "open";
+      location.hash = "/ルービックキューブ4x4ものぐさ法.html#renki";
+   }
+} // *0 L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L U2 L' B' B' D' B R F' R' X X L' U2 R' U' R L U' R' U R 
+function addRot1() {
+    cube3dg.FaceF = "f";
+    RotatesG = "*#0452 *#3741 *#3741 L' U2 R' U' R L U' R' U R *#6064 *#6064";
 }
-function openSwin(obj,lang="en") {
+function addRot2() {
+    cube3dg.initCube();
+    RotatesG = "*0 L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L U2 L' B' B' D' B R F' R' X X ** " ;
+    navigator.clipboard.writeText(RotatesG+"*#0452 *#3741 *#3741 L' U2 R' U' R L U' R' U R *#6064 *#6064");
+}
+function addRot3() {
+    RotatesG = "*#3649 U R F U F' R' *#4145 *#4145 U' F' U F *#1333 U' *#0509 L U L' U L U' L' *#7680 U R U2 R' *#6667 U2 F' U2 F U' F' U F *#4448 *#4448"; //
+    navigator.clipboard.writeText(RotatesG);
+}
+function openSwin(obj,lang="jp") {
 //    obj.parentElement.parentElement.open = "open";
     Rotates = "";
     
-    swin = window.open ((lang=="en"?"/Cubing/unfold-cube4.html":"/Cubing/notation-3d-3.html"),
+    swin = window.open ((lang=="en"?"https://noriofujii.github.io/Cubing/unfold-cube4.html":"notation-3d-2.html"),
            "cube3d", 'height=600,width=380,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
 }
 function openAll(obj,mode="open") {
@@ -88,37 +104,32 @@ function openAll(obj,mode="open") {
 function fwdRot(obj){
     var seq = obj.nextSibling.wholeText.trim();
     openOnly(obj);
-    Rotates += seq;
     restart(seq);
 }
 function rvsRot(obj){
     var seq = obj.previousSibling.wholeText.trim();
-    Rotates += "! " + seq;
-    restart("");
+    restart("! " + seq);
 }
-function restart(rot) {
+function restart(rot,rots="") {
     ClipDT = rot;
-    document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
-    if (swin) {
-        swin.focus();
-        if ((swin.closed) && !cube3df.Tid)
-            cube3df.setTimeout("cube3df.checkRot()",100);
-    }
+    document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rots==""?rot:rots;
+    clearTimeout(cube3df.Tid);
+    if (swin) swin.focus(),swin.RotCopy(rot);
+    else cube3df.focus(),cube3df.RotCopy(rot);
 }
 function rotSolve(obj) {
     openOnly(obj);
-    Rotates = "*"; rot = "";
-    for (i=1;i<10;i++) Rotates += "*"+note[i]+" "+solrote[i].replace(/-/g,"'").replace(/,/g," ") + " ";
-    Rotates += "Y *-2 *ソルブ完了 X2 ";
+    let i, rotates = "*", rot = "";
+    for (i=1;i<10;i++) rotates += "*"+note[i]+" "+solrote[i].replace(/-/g,"'").replace(/,/g," ") + " ";
+    rotates += "Y *-2 X2 *ソルブ完了";
     for (i=1;i<10;i++) rot += solrote[i].replace(/-/g,"'").replace(/,/g," ") + " ";
-    document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
+    restart(rotates,rot);
 }
 function RotCopy(obj){
     document.getElementsByName('pythonQ')[0].contentWindow.location.replace('about:blank');
     rot = obj.previousSibling.wholeText.trim();
     navigator.clipboard.writeText(rot);
-    Rotates += "*0 "+ rot + " **";
-    restart(rot);
+    restart("*0 "+rot+" **", rot);
 }
 function openOnly(obj) {
     openAll(document.getElementById('Example'),'');
@@ -133,7 +144,7 @@ function openOnly(obj) {
 </script>
 </head>
 <body background="images/nth_wood_blocks_bg.gif" bgcolor="#F8E2C7" onload="setLsner()">
-<h1 title="惰性的ソルブで、悩まずに廻して８分で完成！">ルービックキューブ4x4ものぐさ法　<font size=3> 第１版　2021.11.11
+<h1 title="惰性的ソルブで、悩まずに廻して８分で完成！">ルービックキューブ4x4ものぐさ法　<font size=3> 第２版　2021.12.12
 </h1>
 <details><summary>
 【プロローグ】</summary>
@@ -160,41 +171,42 @@ function openOnly(obj) {
 　白と黄色を対面中央に４個ずつ固め、白を右において、赤、青、橙、緑(勝手に揃う)、と順に固める。</summary>
 　一つ上の面あるいは二つ上の面に跳ね上げて固定する。跳ね上げた波は必ず引き波で戻す。<br>
 　固定したいパーツは行き先で隠れスポットに回転させ保存、引き戻されないように踏ん張る。<br>
-　２個以上を隠すには、上げ波の線上でさらに上に上がるように置き、引き波で元の位置に戻して、<br>
+　３個以上を隠すには、上げ波の線上でさらに上に上がるように置き、引き波で元の位置に戻して、<br>
 　隠れスポットに保存したパーツと合体させる。<a href="http://cubeland.curahome.net/4x4x4/solution1/step1/" target=_BLANK>参考リンク：</a><br>　
-　　　<img src="images/4rc_1_1_041.gif" width=120>
-　　　<img src="images/4rc_1_2.png" width=120>
+　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_1_041.gif" width=120>
+　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_2.png" width=120>
 </details>
-　　　<img src="images/4rc_1_4.gif" width=120>
+　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_4.gif" width=120>
 <details><summary>
 (1)白面十字形準備<br>
 　エッジポストを同色２個ずつペアで固定して、3x3解法に結び付ける。</summary>
 　12箇所と多いため、効率良く２箇所ずつ揃えられるように進める。<br>
 　次の３面配置A,Bとなるように外枠だけを回転させ、次の固定手順にてエッジペアを揃える。<br>
 　この時点では、２個のエッジの色が揃っていれば、各面の中央色と合っていなくてもよい。<br>
-　　　<img src="images/4rc_1_4_008.gif" width=100>
-　<img src="images/4rc_1_4_46.gif" width=100>
-　<img src="images/4rc_1_4_47.gif" width=100>
-　<img src="images/4rc_1_4_48.gif" width=100>
-　<img src="images/4rc_1_4_49.gif" width=100>
-　<img src="images/4rc_1_4_50.gif" width=100><br>
+　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_008.gif" width=100>
+　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_46.gif" width=100>
+　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_47.gif" width=100>
+　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_48.gif" width=100>
+　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_49.gif" width=100>
+　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_50.gif" width=100><br>
 　最後の中央エッジは、２箇所互いにクロスペアになり（左図）３面配置にできないことも起こる。<br>
-　　　<img src="images/4rc_1_4_91.gif" width=120>
-　　　<img src="images/4rc_1_4_92.gif" width=120><br>
+　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_91.gif" width=120>
+　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_4_92.gif" width=120><br>
 　この時、右図のキューブのようにエッジペアに並べるためには、次の手順による。<br>
-　　　<img src="images/Rw-.png" width=80>
-　<img src="images/F.png" width=80>
-　<img src="images/U-.png" width=80>
-　<img src="images/R_.png" width=80>
-　<img src="images/F-.png" width=80>
-　<img src="images/U.png" width=80>
-　<img src="images/Rw.png" width=80><br>
+　<span> Rw' F U' R F' U Rw <button type="button" onclick="RotCopy(this)">コピー</button></span><br>
+　　　<img src="https://mori1-hakua.tokyo/images/Rw-.png" width=80>
+　<img src="https://mori1-hakua.tokyo/images/F.png" width=80>
+　<img src="https://mori1-hakua.tokyo/images/U-.png" width=80>
+　<img src="https://mori1-hakua.tokyo/images/R_.png" width=80>
+　<img src="https://mori1-hakua.tokyo/images/F-.png" width=80>
+　<img src="https://mori1-hakua.tokyo/images/U.png" width=80>
+　<img src="https://mori1-hakua.tokyo/images/Rw.png" width=80><br>
 　中央エッジが12箇所揃ったら、<a href="/ルービックキューブ簡単解法.html#Cross" target=_BLANK>3x3の要領</a>で、白面の十字形を揃える。<br>　
 </details>
-　　　<img src="images/4rc_1_3.gif" width=120>
-　　　<img src="images/4rc_2_1_05.gif" width=120><br>
+　　　<img src="https://mori1-hakua.tokyo/images/4rc_1_3.gif" width=120>
+　　　<img src="https://mori1-hakua.tokyo/images/4rc_2_1_05.gif" width=120><br>
 
-<details><summary>
+<details id="renki" name="renki"><summary>
 (2)ものぐさ連帰<br>
 　黄色面へコーナーポスト白上げからの三個連れF2L　x４回（エッジキューブは２個ペア）
 </summary>
@@ -206,16 +218,21 @@ function openOnly(obj) {
 　　・同色なら、エッジキューブをコーナーポストの隣に呼び寄せ<br>
 　　・異色なら、エッジキューブをコーナーとは桂馬の位置に移動させ<br>
 　　それぞれ、スロットインする。<br><br>
-　桂馬アクセルの事例：撮像の関係で、黄色面を白面で表現している</summary><br>
-　　　<img src="https://mori1-hakua.tokyo/images/MonoGF2L1.png" width=600><br>
-
+　桂馬アクセルによる連帰事例：</summary><br>
+　　<iframe name="cube3dg" style="width:300px; height:260px" frameborder="0" scrolling="no" src=""></iframe>
+<button type="button" onclick="addRot1()">桂馬アクセル</button>
+<button type="button" onclick="addRot2()">戻す</button>&nbsp;&nbsp;因みに
+<button type="button" onclick="addRot3()">次は？</button>
+<br>
+　「戻す」ボタンでは、最初の状態にするとともに、回転記号のすべてをクリップボードに<br>
+　入れてあるので、下部のシミュレーターで同じ状態を作り、一つ一つ戻して確認ができる。<br><br>
 　各コーナーの白ポストの２色と同じエッジキューブを、センターキューブの色に合わせた<br>
 　上面の桂馬の位置に置く。<br>
 　白上げや桂馬上げの時、崩しても良いスロットが後方に来るよう事前に横回転移動させる<br>
 　ことを忘れてはならない。<br>
 　桂馬の位置のエッジキューブの上面色にコーナーポストを合わせられる様に、エッジスロット<br>
-　の横倒し方向（上の例では「R」）を決め、倒して、コーナースロットの横回転を迎え入れる。<br>
-　（もし最初の絵の左上丸印の色が赤だったら、上段の[R][R']回転は逆になることに注意。<br>
+　の横倒し方向を決め、倒して、コーナースロットの横回転を迎え入れる。<br>
+　（キューブ右上のパーツ緑が赤だったら、途中の[R][R']回転は逆になることに注意。<br>
 　　それぞれを、桂馬アクセル、桂馬ブレーキと呼び、定石とする）<br>
 　その後、エッジスロットを縦に戻し、上層を90°回転してエッジスロットの縦回転を迎え、<br>
 　コーナースロット-90°戻し回転した後、白を下に向くようにして縦に戻す。<br>
@@ -281,7 +298,13 @@ function openOnly(obj) {
 (5)ものぐさ金魚（４x４パリティ補正あり）<br>
 　黄色面の魚型を、下図のような横面を含むGoalFishの魚型に進化させる。<br>
 　基本的には、エッジ<font color=red>A'</font>とエッジ<font color=red>B'</font>の片方または双方のお迎えパームだけで進化する。<br>
-　ただし、4x4のキューブの場合は、<font color=red>CC’</font>が同色になっていないケースが５割ほど存在する。<br>
+</summary>
+
+　・魚上層横３個が黄色無しの面（<font color=red>AA’</font>）の頭エッジ<font color=red>A’</font>色を<font color=red>C’</font>対面から取りに<br>　　お迎え回転（Up）<br>
+　・（<font color=red>AA’</font>）の対面（<font color=red>BB’</font>）の頭エッジ<font color=red>B’</font>色を<font color=red>C’</font>対面から取りにお迎え回転（Up）<br>
+　　　　エッジ２個が左右でなく相互対面（奥同志）にあるなら、十字交換（Hp）<br><br>
+<details><summary>
+　なお、4x4のキューブの場合は、<font color=red>CC’</font>が同色になっていないケースが５割ほど存在する。<br>
 </summary>
 　その時には、次の手順で、<font color=red>C’</font>と対面するエッジ２個とを交換する必要がある。<br>
 　交換したい<font color=red>C’</font>と対面とを縦にしてフロントにおき、<br>
@@ -293,12 +316,8 @@ function openOnly(obj) {
 　<img src="https://mori1-hakua.tokyo/images/F2.png" width=80>
 　<img src="https://mori1-hakua.tokyo/images/U2.png" width=80>
 　<img src="https://mori1-hakua.tokyo/images/l2.png" width=80><br>
-
-　・魚上層横３個が黄色無しの面（<font color=red>AA’</font>）の頭エッジ<font color=red>A’</font>色を<font color=red>C’</font>対面から取りに<br>　　お迎え回転（Up）<br>
-　・（<font color=red>AA’</font>）の対面（<font color=red>BB’</font>）の頭エッジ<font color=red>B’</font>色を<font color=red>C’</font>対面から取りにお迎え回転（Up）<br>
-　　　　エッジ２個が左右でなく相互対面（奥同志）にあるなら、十字交換（Hp）<br>
-　・黄色一面からの時は、３個同色の対面<font color=red>CC’</font>から（Up）実施で一気にゴールへ<br>
-　　　　　　　　　　　　３個同色無ければ、クルクルパーム後４）へ<br>
+　この後は、そのまま(6)のクルクルパームでゴールへ達する。<br><br>
+</details>
 </details>
 　<img src="https://mori1-hakua.tokyo/images/CUBE4.png" width=150>
 <img src="https://mori1-hakua.tokyo/images/CUBE5.png" width=150>
@@ -336,10 +355,7 @@ function openOnly(obj) {
 　　　<img src="https://mori1-hakua.tokyo/images/CUBE9.png" width=120><br>
 　なお実績は、最終ターンがクルクルパーム９割、Hパーム１割という出現バランスです。<br>
 </div>
-<details><summary>　【動画】クルクルパームでFinish ！<br>
-</summary>　<video src="https://mori1-hakua.tokyo/images/CubeGoal.mp4" width=500 height=300 controls autoplay muted loop></video>
-</details>
-<details><summary>　【参考】暗記する５つの回転手順</summary>
+<details><summary>　【参考】暗記する５つの回転手順とパリティ補正</summary>
 <details><summary>　クルクル<b>ムーブ:</b> R' U' F' U F R <button type="button" onclick="RotCopy(this)">コピー</button><br>
 　　上面の対角交換としても使われる。</summary>
 　　<img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
@@ -412,6 +428,10 @@ function openOnly(obj) {
 → <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
 → <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
 </details>
+<details><summary>　4x4パリティ補正　:<span> r2 B2 U2 l U2 r' U2 r U2 F2 r F2 l' B2 r2 <button type="button" onclick="RotCopy(this)">コピー</button> （OLL Parity）</span><br>
+　　　　　　　　　　  :<span> Rw U2 X Rw U2 Rw U2 Rw' U2 X' Rw U2 Rw' U2 Rw U2 Rw' U2 Rw' <button type="button" onclick="RotCopy(this)">コピー</button>　（PLL Parity) </span><br>
+　　</summary>
+</details>
 </details><br>
 <div id="Example">
 <details open><summary>　【事例】3x3のスクランブル例と、ものぐさソルブ　（85手）</summary>
@@ -419,7 +439,7 @@ function openOnly(obj) {
 　　 <button type="button" onclick="openAll(document.getElementById('Example'))">全ソルブを開く</button>
 　　 <button type="button" onclick="openAll(document.getElementById('Example'),'')">全ソルブを閉じる</button><br>
 　　 <button type="button" onclick="fwdRot(this)">ごちゃ混ぜ</button>
- *スクランブル17 L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L <button type="button" onclick="rvsRot(this)">戻す</button><br>
+ *スクランブル17 L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L **<button type="button" onclick="rvsRot(this)">戻す</button><br>
 　　　　　　　　<button type="button" onclick="rotSolve(this)">全ソルブ回転</button>
 　（自動解析は、記号列修正入力にも対応）
 </details>
@@ -451,7 +471,7 @@ function openOnly(obj) {
 <p></p>
 </details>
 </details>
-<details "><summary>　　(3)上層面を黄色の魚型クロスにする</summary>
+<details><summary>　　(3)上層面を黄色の魚型クロスにする</summary>
 <details name="solve"><summary>　　　・上層４コーナーの交換で正しい位置にする<br>
 　　 　　４コーナーの位置がX型でずれているので、クルクルムーブ１発で揃える。
 </summary>
@@ -474,15 +494,16 @@ function openOnly(obj) {
 <p></p>
 </details>
 <div id="rotResol">
-<details><summary> 　<strong>参考： 4x4回転記号と3D Rubik's Cube の結果</strong>
+<details ><summary> 　<strong>参考： 4x4回転記号と3D Rubik's Cube の結果</strong>
 (<button type=button onclick="openSwin(this)">別窓</button>)
 (<button type=button onclick="openSwin(this,lang='en')">English</button>)</summary>
 
 <table><tr><td>　</td><td><iframe name="pythonQ" height="28px" width="800px" scrolling="yes" frameborder="0" src=""></iframe>
 </td></tr>
 <tr><td>　</td><td><iframe name="cube3df" style="resize: both; width:380px; height:600px" frameborder="0" src=""></iframe>
-</td><tr><td>　</td><td>スクランブルA:<span> l2 B2 l B U' D' b' R2 u r' F2 d' B2 u2 U2 D l' D r2 R b2 B2 b L2 L' B' b2 f' F d l' f R2 R2 F F' r u D F' R' r2 R2 b2 B2 B2 f' R b b <button type="button" onclick="RotCopy(this)">セット</button></span><br>
-</td><tr><td>　</td><td>スクランブルB:<span> R' U' F L F2 L2 B2 R F2 R2 F2 R' B' R' D U' F2 U2 R F U2 B' R' U' F <button type="button" onclick="RotCopy(this)">セット</button></span><br>
+</td><tr><td>　</td><td>休止状態のとき、「変速」ボタンで一つずつ戻すことが出来、休止解除時に再現できる。<br>休止状態での「4x4次」ボタンでの戻しは、戻した部分を捨てることが出来る。
+</td><tr><td>　</td><td>スクランブルA:<span> l2 B2 l B U' D' b' R2 u r' F2 d' B2 u2 U2 D l' D r2 R b2 B2 b L2 L' B' b2 f' F d l' f F F' r u D F' R' r2 R2 b2 f' R b2 <button type="button" onclick="RotCopy(this)">セット</button></span><br>
+</td><tr><td>　</td><td>スクランブルB:<span> L' R2 U2 F2 U2 F2 D' R2 D' F U' L D' R D' F' L ** <button type="button" onclick="RotCopy(this)">セット</button></span><button type="button" onclick="rotSolve(this)">全ソルブ回転</button><br>
 </td></tr>
 </table>
 </details>
@@ -490,4 +511,4 @@ function openOnly(obj) {
 </div><br>
 　　　　　　　　　<a href="https://mori1-hakua.tokyo/RCeasy.html">https://mori1-hakua.tokyo/RCeasy.html</a>
   By N.Fujii　　<a href="javascript:location.reload(true)" title="詳細を閉じる"><b>Top</a><br><br>
-
+累積アクセス数：<iframe src="/count_img/countRC.php" height=30 width=140 frameborder="0" scrolling="no" style="vertical-align: bottom"></iframe>
