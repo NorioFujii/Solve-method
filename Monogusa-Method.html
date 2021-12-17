@@ -86,22 +86,26 @@ function openAll(obj,mode="open") {
 function fwdRot(obj){
     var seq = obj.nextSibling.wholeText.trim();
     openOnly(obj);
-    Rotates += seq;
     restart(seq);
 }
 function rvsRot(obj){
     var seq = obj.previousSibling.wholeText.trim();
-    Rotates += "! " + seq;
-    restart("");
+    restart("! " + seq);
 }
-function restart(rot) {
+function restart(rot,rots="") {
     ClipDT = rot;
-    document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
+    document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rots==""?rot:rots;
+    clearTimeout(cube3df.Tid);
     if (swin) {
-        swin.focus();
-        if ((swin.closed) && !cube3df.Tid)
-            cube3df.setTimeout("cube3df.checkRot()",100);
+        let secu="";
+        try {swin.location.href} catch(e) {secu = String(e)}
+        if (secu!="") {
+            navigator.clipboard.writeText(rot);
+            setTimeout("swin.focus();",100);
+        }
+        else swin.focus(),swin.RotCopy(rot);
     }
+    else cube3df.focus(),cube3df.RotCopy(rot);
 }
 function rotSolve(obj) {
     openOnly(obj);
@@ -109,7 +113,7 @@ function rotSolve(obj) {
     for (i=1;i<10;i++) Rotates += "*"+note[i]+" "+solrote[i].replace(/-/g,"'").replace(/,/g," ") + " ";
     Rotates += "*Completed X2 ";
     for (i=1;i<10;i++) rot += solrote[i].replace(/-/g,"'").replace(/,/g," ") + " ";
-    document.getElementsByName('pythonQ')[0].contentDocument.body.innerHTML = rot;
+    restart(rotates,rot);
 }
 function pythonSolve() {
     window.open('/Cubing/python/computing.html',"Python",'height=140,width=480,left='+(window.screenX+300)+',dependent=yes,scrollbars=no');
@@ -141,8 +145,7 @@ function RotCopy(obj){
     document.getElementsByName('pythonQ')[0].contentWindow.location.replace('about:blank');
     rot = obj.previousSibling.wholeText.trim();
     navigator.clipboard.writeText(rot);
-    Rotates += "*0 "+ rot + " **";
-    restart(rot);
+   restart("*0 "+rot+" **", rot);
 }
 function openOnly(obj) {
     openAll(document.getElementById('Example'),'');
