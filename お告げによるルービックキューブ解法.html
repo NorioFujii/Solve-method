@@ -85,8 +85,8 @@ function openSwin(obj,lang="jp") {
 //    obj.parentElement.parentElement.open = "open";
     Rotates = "";
     
-    swin = window.open ((lang=="en"?"https://noriofujii.github.io/Cubing/unfold-cube.html?mode=clipin":"notation-3d.html"),
-           (lang=="en"?"cube3d":"cube3d"), 'height=720,width=380,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
+    swin = window.open ((lang=="en"?"https://noriofujii.github.io/Cubing/unfold-cube.html":"notation-3d.html"),
+           (lang=="en"?"cube3e":"cube3d"), 'height=720,width=380,dependent=yes,left='+(window.screenX+400)+',scrollbars=no');
 }
 function openAll(obj,mode="open") {
     for (var detal of obj.getElementsByTagName("details"))
@@ -311,7 +311,7 @@ V字型の後、時計３時短針の下側(６時)を右手に持ち、くる�
 　　　　エッジ２個が左右でなく相互対面（奥同志）にあるなら、十字交換（Hp）<br>
 　・黄色一面からの時は、３個同色の対面<font color=red>CC’</font>から（Up）実施で一気にゴールへ<br>
 　　　　　　　　　　　　３個同色無ければ、くるくるパーム後４）へ<br>
-　　Hパームと呼ばれる十字交換の手順を使うと、手数が縮むケースもある。<br>
+　　Hパームと呼ばれる十字交換の手順を使うと、相互迎えの手数が半減する。<br>
 　　Zパーム（斜め２組交換）も手数を縮められるが、躓くと修復リスク大。<br>
 　　（た・な・か・なな・か・なな・か・な・かか・なな　と説く人もいる）<br>
 </details>
@@ -355,7 +355,7 @@ V字型の後、時計３時短針の下側(６時)を右手に持ち、くる�
 </details>
 <details><summary>　【参考】暗記する５つの回転手順</summary>
 <details><summary>　くるくる<b>ムーブ:</b> R' U' F' U F R <button type="button" onclick="RotCopy(this)">コピー</button><br>
-　　上面の対角交換としても使われる。</summary>
+　　上面の４コーナーの対角交換としても使われる。</summary>
 　　<img src="https://mori1-hakua.tokyo/images/R-.gif" align="absmiddle">
 → <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
 → <img src="https://mori1-hakua.tokyo/images/F-.gif" align="absmiddle">
@@ -407,24 +407,24 @@ V字型の後、時計３時短針の下側(６時)を右手に持ち、くる�
 → <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
 → <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
 </details>
-<details><summary>　３エッジ回転移動:<span>  M2 U' M' U2 M U' M2 <button type="button" onclick="RotCopy(this)">コピー</button> （右迎え）(Up-b）</span><br>
-　　　　　　　　　　  :<span> M2 U M' U2 M U M2 <button type="button" onclick="RotCopy(this)">コピー</button>　（左迎え) (Up-a)</span><br>
+<details><summary>　３エッジ回転移動:<span>  F2 U M U2 M' U F2 <button type="button" onclick="RotCopy(this)">コピー</button> （Ｍに右迎え）(Up-b）</span><br>
+　　　　　　　　　　 :<span> F2 U' M U2 M' U' F2 <button type="button" onclick="RotCopy(this)">コピー</button>（Ｍに左迎え) (Up-a)</span><br>
 　　主に左右のエッジお迎えパームとして使われる。</summary>
-　　<img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
-→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
-→ <img src="https://mori1-hakua.tokyo/images/Rc-.gif" align="absmiddle">
-→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+　　<img src="https://mori1-hakua.tokyo/images/F-2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
 → <img src="https://mori1-hakua.tokyo/images/Rc.gif" align="absmiddle">
-→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
-→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/F-2.gif" align="absmiddle">
 <br>
-　　<img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
-→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
-→ <img src="https://mori1-hakua.tokyo/images/Rc-.gif" align="absmiddle">
-→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+　　<img src="https://mori1-hakua.tokyo/images/F2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
 → <img src="https://mori1-hakua.tokyo/images/Rc.gif" align="absmiddle">
-→ <img src="https://mori1-hakua.tokyo/images/U.gif" align="absmiddle">
-→ <img src="https://mori1-hakua.tokyo/images/M180u.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U2.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/Rc-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/U-.gif" align="absmiddle">
+→ <img src="https://mori1-hakua.tokyo/images/F2.gif" align="absmiddle">
 </details>
 </details><br>
 <div id="Example">
